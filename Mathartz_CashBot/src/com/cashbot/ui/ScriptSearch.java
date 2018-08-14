@@ -82,7 +82,10 @@ public class ScriptSearch {
 		{
 			CommonObjects.objpresto = new presto_commons();
 		}
-		CommonObjects.objpresto = obj;
+		else
+		{
+			CommonObjects.objpresto = obj;
+		}
 		initialize();
 	}
 
@@ -124,14 +127,14 @@ public class ScriptSearch {
 		{
 			frmScriptSearch = new JFrame();
 			frmScriptSearch.setVisible(true);
-			frmScriptSearch.setTitle("Presto Contract Crawler");
+			frmScriptSearch.setTitle("Presto Contract Search");
 			frmScriptSearch.getContentPane().setBackground(new Color(51,51,51));
 			frmScriptSearch.getContentPane().setLayout(new BorderLayout(0, 0));
 			frmScriptSearch.setBounds(100, 100, 945, 629);
 			frmScriptSearch.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			frmScriptSearch.setResizable(false);
 			
-			JLabel lblScriptsCrawler = new JLabel("Sec-Id Crawler");
+			JLabel lblScriptsCrawler = new JLabel("SEC-ID STORAGE");
 			lblScriptsCrawler.setHorizontalAlignment(SwingConstants.CENTER);
 			lblScriptsCrawler.setForeground(new Color(255, 220, 135));
 			lblScriptsCrawler.setFont(new Font("Verdana", Font.PLAIN, 24));
@@ -191,13 +194,14 @@ public class ScriptSearch {
 											+ ",'"+records.getTicksize()+"','"+records.getExpdd()+"','"+records.getExpmonthyear()+"','"+records.getOpttype()+"','"+records.getStrike()+"');";
 						
 						objdb.executeNonQuery(h2con, query);
-						String [][] values = objdb.getMultiColumnRecords(h2con, "SELECT * FROM TBL_MASTER_CONTRACTS ORDER BY SYMBOL;");
+						String [][] values = objdb.getMultiColumnRecords(h2con, "SELECT SECID, SYMBOL, EXCHANGE, INSTRUMENT, LOTSIZE, TICKSIZE, EXPDD, EXPMONTHYEAR, OPTTYPE, STRIKE FROM TBL_MASTER_CONTRACTS ORDER BY SYMBOL;");
 						model = new DefaultTableModel(values, col);
 						table.setModel(model);
+						textSymbol.setText("");
 					}
 					else
 					{
-						JOptionPane.showMessageDialog(frmScriptSearch, "No Matched Sec Id Found for given symbol and contract month, \n Kindly provide valid FUTIDX & OPTIDX symbols", "INFO",JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(frmScriptSearch, "No Matched Sec-Id Found for given symbol.", "INFO",JOptionPane.INFORMATION_MESSAGE);
 						
 					}
 				}
@@ -232,6 +236,23 @@ public class ScriptSearch {
 			    }   
 			};
 			
+			table.addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent e) {
+					if (e.isControlDown() && e.getKeyCode() == 68) 
+					{
+			  		  //CTRL+ D
+							if (table.getSelectedRowCount() >0)
+							{
+								objdb.executeNonQuery(h2con, "DELETE FROM TBL_MASTER_CONTRACTS WHERE SECID='"+table.getValueAt(table.getSelectedRow(), 0)+"';");
+								String [][] values = objdb.getMultiColumnRecords(h2con, "SELECT SECID, SYMBOL, EXCHANGE, INSTRUMENT, LOTSIZE, TICKSIZE, EXPDD, EXPMONTHYEAR, OPTTYPE, STRIKE FROM TBL_MASTER_CONTRACTS ORDER BY SYMBOL;");
+								model = new DefaultTableModel(values, col);
+								table.setModel(model);
+							}
+			        }
+				}
+				
+			});
+			
 			JTableHeader header = table.getTableHeader();
 			header.setForeground(new Color(255, 220, 135));
 			header.setBackground(new Color(51, 51, 51));
@@ -250,7 +271,20 @@ public class ScriptSearch {
 			separator.setBounds(22, 96, 897, 11);
 			pnlmiddle.add(separator);
 			
+			String [][] values = objdb.getMultiColumnRecords(h2con, "SELECT SECID, SYMBOL, EXCHANGE, INSTRUMENT, LOTSIZE, TICKSIZE, EXPDD, EXPMONTHYEAR, OPTTYPE, STRIKE FROM TBL_MASTER_CONTRACTS ORDER BY SYMBOL;");
+			model = new DefaultTableModel(values, col);
+			table.setModel(model);
+			
 			JButton btndeleteall = new JButton("Delete All");
+			btndeleteall.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) 
+				{
+					objdb.executeNonQuery(h2con, "DELETE FROM TBL_MASTER_CONTRACTS;");
+					String [][] values = objdb.getMultiColumnRecords(h2con, "SELECT SECID, SYMBOL, EXCHANGE, INSTRUMENT, LOTSIZE, TICKSIZE, EXPDD, EXPMONTHYEAR, OPTTYPE, STRIKE FROM TBL_MASTER_CONTRACTS ORDER BY SYMBOL;");
+					model = new DefaultTableModel(values, col);
+					table.setModel(model);
+				}
+			});
 			btndeleteall.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btndeleteall.setBounds(370, 530, 240, 35);
 			pnlmiddle.add(btndeleteall);

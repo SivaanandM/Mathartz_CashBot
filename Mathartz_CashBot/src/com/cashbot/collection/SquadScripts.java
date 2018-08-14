@@ -3,16 +3,15 @@ package com.cashbot.collection;
 public class SquadScripts {
 	
 	int id;
-	String headid,headdisplay,headsymbol,symbol,exchange,
+	String headid,headdisplay,headsymbol,exchange,
 	instrument,lotsize,ticksize,expdd,expmonthyear,opttype,strike;
-	public SquadScripts(int id,String headid, String headdisplay, String headsymbol, String symbol, String exchange,
+	public SquadScripts(int id,String headid, String headdisplay, String headsymbol, String exchange,
 			String instrument, String lotsize,String ticksize,String expdd,String expmonthyear,String opttype, String strike)
 	{
 		this.id = id;
 		this.headid =headid ;
 		this.headdisplay = headdisplay;
 		this.headsymbol =headsymbol ;
-		this.symbol = symbol;
 		this.exchange = exchange ;
 		this.instrument = instrument;
 		this.lotsize = lotsize;
@@ -38,39 +37,35 @@ public class SquadScripts {
 	{
 		return headdisplay;
 	}
-	public String getPSymbol()
-	{
-		return symbol;
-	}
-	public String getPExchange()
+	public String getExchange()
 	{
 		return exchange;
 	}
-	public String getPInstrument()
+	public String getInstrument()
 	{
 		return instrument;
 	}
-	public String getPLotsize()
+	public String getLotsize()
 	{
 		return lotsize;
 	}
-	public String getPTicksize()
+	public String getTicksize()
 	{
 		return ticksize;
 	}
-	public String getPExpdd()
+	public String getExpdd()
 	{
 		return expdd;
 	}
-	public String getPExpmonthyear()
+	public String getExpmonthyear()
 	{
 		return expmonthyear;
 	}
-	public String getPOpttype()
+	public String getOpttype()
 	{
 		return opttype;
 	}
-	public String getPStrike()
+	public String getStrike()
 	{
 		return strike;
 	}

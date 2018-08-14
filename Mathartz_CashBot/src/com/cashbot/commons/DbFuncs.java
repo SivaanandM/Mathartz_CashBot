@@ -76,7 +76,7 @@ public class DbFuncs {
 			{
 				dbName = prop.getProperty("DB_HOST_BANKNIFTY_PATH").replace("/", File.separator);
 			}
-			else if (prop.getProperty("SOFTWARE").toString().equalsIgnoreCase("CASH"))
+			else if (prop.getProperty("SOFTWARE").toString().equalsIgnoreCase("CM"))
 			{
 				dbName = prop.getProperty("DB_HOST_CM_PATH").replace("/", File.separator);
 			}
@@ -138,8 +138,19 @@ public class DbFuncs {
 	        	 BeastViewList record = new BeastViewList(rs.getInt("id"),rs.getString("headdisplay"),rs.getDouble("F1Point"),rs.getDouble("F1PL"),rs.getDouble("F2Point"),rs.getDouble("F2PL"),rs.getDouble("F3Point"),rs.getDouble("F3PL"),
 	        			 rs.getDouble("F4Point"),rs.getDouble("F4PL"),rs.getDouble("F5Point"),rs.getDouble("F5PL"),rs.getDouble("F6Point"),rs.getDouble("F6PL"));
 	             set.add(record);
+	             CommonObjects.GlobalBeastViewTotal[0][1] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][1]) + rs.getDouble("F1Point")));
+	             CommonObjects.GlobalBeastViewTotal[0][2] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][2]) + rs.getDouble("F1PL")));
+	             CommonObjects.GlobalBeastViewTotal[0][3] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][3]) + rs.getDouble("F2Point")));
+	             CommonObjects.GlobalBeastViewTotal[0][4] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][4]) + rs.getDouble("F2PL")));
+	             CommonObjects.GlobalBeastViewTotal[0][5] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][5]) + rs.getDouble("F3Point")));
+	             CommonObjects.GlobalBeastViewTotal[0][6] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][6]) + rs.getDouble("F3PL")));
+	             CommonObjects.GlobalBeastViewTotal[0][7] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][7]) + rs.getDouble("F4Point")));
+	             CommonObjects.GlobalBeastViewTotal[0][8] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][8]) + rs.getDouble("F4PL")));
+	             CommonObjects.GlobalBeastViewTotal[0][9] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][9]) + rs.getDouble("F5Point")));
+	             CommonObjects.GlobalBeastViewTotal[0][10] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][10]) + rs.getDouble("F5PL")));
+	             CommonObjects.GlobalBeastViewTotal[0][11] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][11]) + rs.getDouble("F6Point")));
+	             CommonObjects.GlobalBeastViewTotal[0][12] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][12]) + rs.getDouble("F6PL")));
 	         }
-	         
 	         if (rs != null) {
 	                rs.close();
 	            }
@@ -170,7 +181,7 @@ public class DbFuncs {
 	         stmt.execute(Querystr);
 	         ResultSet rs =stmt.getResultSet(); 
 	         while (rs.next()) {
-	        	 SquadScripts record = new SquadScripts(rs.getInt("id"),rs.getString("headid"),rs.getString("headdisplay"),rs.getString("headsymbol"),rs.getString("symbol"),rs.getString("exchange"),rs.getString("instrument")
+	        	 SquadScripts record = new SquadScripts(rs.getInt("id"),rs.getString("headid"),rs.getString("headdisplay"),rs.getString("headsymbol"),rs.getString("exchange"),rs.getString("instrument")
 	        			 ,rs.getString("lotsize"),rs.getString("ticksize"),rs.getString("expdd"),rs.getString("expmonthyear"),rs.getString("opttype"),rs.getString("strike"));
 	             set.add(record);
 	         }
@@ -705,10 +716,10 @@ public class DbFuncs {
 					 {
 						 if (i==0)
 						 {
-							 bWrite1.write("ID, HEAD , F1 POINT, F2 POINT, F3 POINT, F4 POINT, F5 POINT, PLAYER ");
+							 bWrite1.write("ID, SCRIPT , F1 POINT, F1 PL, F2 POINT, F2 PL, F3 POINT, F3 PL, F4 POINT, F4 PL, F5 POINT, F5 PL, F6 POINT, F6 PL ");
 							 bWrite1.newLine();
 						 }
-						 bWrite1.write(recs[i][0]+","+ recs[i][1]+","+recs[i][3]+","+recs[i][4]+","+recs[i][5]+","+recs[i][6]+","+recs[i][7]+","+recs[i][2]);
+						 bWrite1.write(recs[i][0]+","+ recs[i][1]+","+recs[i][2]+","+recs[i][3]+","+recs[i][4]+","+recs[i][5]+","+recs[i][6]+","+recs[i][7]+","+recs[i][8]+","+recs[i][9]+","+recs[i][10]+","+recs[i][11]+","+recs[i][12]+","+recs[i][13]+","+recs[i][14]);
 						 bWrite1.newLine();
 					 }
 				 }

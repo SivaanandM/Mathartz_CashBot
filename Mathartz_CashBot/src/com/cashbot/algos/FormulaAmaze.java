@@ -566,11 +566,11 @@ public class FormulaAmaze {
 			{
 				SquadScripts pl= listcom.getSquadScriptsByID(id, CommonObjects.GlobalSquadScript);
 				String sectype;
-				if(pl.getPInstrument().equalsIgnoreCase("FUTIDX"))
+				if(pl.getInstrument().equalsIgnoreCase("FUTIDX"))
 				{
 					sectype="FUT";
 				}
-				else if (pl.getPInstrument().equalsIgnoreCase("OPTIDX"))
+				else if (pl.getInstrument().equalsIgnoreCase("OPTIDX"))
 				{
 					sectype="OPT";
 				}
@@ -578,8 +578,8 @@ public class FormulaAmaze {
 				{
 					sectype="CM";
 				}
-				String expdate = pl.getPExpdd()+"-"+com.cashbot.prestolib.Date.getmonthvalue(pl.getPExpmonthyear().substring(0, 3))+"-"+pl.getPExpmonthyear().substring(3, 5);
-				clientid = CommonObjects.objpresto.userPlaceOrderNSE("omnesys", sectype, pl.getheadsymbol(), pl.getheadsecid(), expdate, "FA9749", String.valueOf(quant), "0.0", "0.0", pl.getPOpttype(), pl.getPStrike(),
+				String expdate = pl.getExpdd()+"-"+com.cashbot.prestolib.Date.getmonthvalue(pl.getExpmonthyear().substring(0, 3))+"-"+pl.getExpmonthyear().substring(3, 5);
+				clientid = CommonObjects.objpresto.userPlaceOrderNSE("omnesys", sectype, pl.getheadsymbol(), pl.getheadsecid(), expdate, "FA9749", String.valueOf(quant), "0.0", "0.0", pl.getOpttype(), pl.getStrike(),
 						"MARKET", "Presto_Mathsartz_Strategy", "Testing Order", "DAY", orderside);
 			}
 		}
