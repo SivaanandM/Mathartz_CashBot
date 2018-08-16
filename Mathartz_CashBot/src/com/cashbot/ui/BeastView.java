@@ -13,7 +13,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -122,7 +124,6 @@ public class BeastView implements KeyListener{
 		h2con = dbobj.CheckandConnectDB(h2con);
 		CommonObjects.objpresto = new presto_commons();
 		ViewList = dbobj.getBeastViewData(h2con, "SELECT * FROM TBL_BEAST_VIEW ORDER BY ID;");
-		CommonObjects.GlobalBeastViewTotal = new String[][]{{"TOTAL","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0"}};
 		initialize();
 		maintable.setFocusable(true);
 		frmBeastview.setVisible(true);
@@ -204,22 +205,36 @@ public class BeastView implements KeyListener{
 		
 		//Main frmBeastView Layout Design
 		frmBeastview = new JFrame();
-		frmBeastview.setTitle(CommonObjects.GlobalSoftwarefor);
+		frmBeastview.setTitle("MathsArtz "+CommonObjects.GlobalSoftwarefor);
 		frmBeastview.setBackground(new Color(36,34,29));
 		frmBeastview.getContentPane().setBackground(new Color(51, 51, 51));
 		frmBeastview.getContentPane().setLayout(new BorderLayout(0, 0));
+		frmBeastview.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frmBeastview.addWindowListener(new WindowAdapter() {
+		    @Override
+		    public void windowClosing(WindowEvent we)
+		    { 
+		    	String exitcode ="0";
+		        JFrame exitframe = new JFrame("Exit Check");
+		        exitcode = JOptionPane.showInputDialog(exitframe, "Enter Secret Code to Exit #");
+		        if(exitcode.equalsIgnoreCase("7"))
+		        {
+		            System.exit(0);
+		        }
+		    }
+		});
 		
 		JPanel pnlhead = new JPanel();
 		pnlhead.setBackground(new Color(51, 51, 51));
 		frmBeastview.getContentPane().add(pnlhead, BorderLayout.NORTH);
 		pnlhead.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblhead = new JLabel(strtitle);
-		
-		lblhead.setHorizontalAlignment(SwingConstants.CENTER);		
-		lblhead.setFont(new Font("Verdana", Font.PLAIN, 24));
-		lblhead.setForeground(new Color(240,159,108));
-		pnlhead.add(lblhead);
+//		JLabel lblhead = new JLabel(strtitle);
+//		
+//		lblhead.setHorizontalAlignment(SwingConstants.CENTER);		
+//		lblhead.setFont(new Font("Verdana", Font.PLAIN, 24));
+//		lblhead.setForeground(new Color(240,159,108));
+//		pnlhead.add(lblhead);
 		
 		JPanel pnldown = new JPanel();
 		pnldown.setBackground(new Color(51, 51, 51));
@@ -240,17 +255,34 @@ public class BeastView implements KeyListener{
 				CommonObjects.isRunning=true;
 				btnrun.setText("RUNNING..");
 				CommonObjects.GlobalBeastViewList = ViewList;
+				
 				CommonObjects.GlobalAmazeF1 =  dbobj.getFormulaData(h2con, "SELECT * FROM TBL_FORMULA_DATA WHERE FNAME='F1';");
+				CommonObjects.GlobalAmazeF2 =  dbobj.getFormulaData(h2con, "SELECT * FROM TBL_FORMULA_DATA WHERE FNAME='F2';");
+				CommonObjects.GlobalAmazeF3 =  dbobj.getFormulaData(h2con, "SELECT * FROM TBL_FORMULA_DATA WHERE FNAME='F3';");
+				CommonObjects.GlobalAmazeF4 =  dbobj.getFormulaData(h2con, "SELECT * FROM TBL_FORMULA_DATA WHERE FNAME='F4';");
+				CommonObjects.GlobalAmazeF5 =  dbobj.getFormulaData(h2con, "SELECT * FROM TBL_FORMULA_DATA WHERE FNAME='F5';");
+				CommonObjects.GlobalAmazeF6 =  dbobj.getFormulaData(h2con, "SELECT * FROM TBL_FORMULA_DATA WHERE FNAME='F6';");
 				
 				CommonObjects.GlobalSquadScript = dbobj.getSquadScriptData(h2con, "SELECT * FROM TBL_TRADE_LINE;");
 				CommonObjects.Globaluniqueheadid = dbobj.getMultiColumnRecords(h2con, "SELECT DISTINCT(HEADID), HEADSYMBOL FROM TBL_TRADE_LINE;");
 				CommonObjects.Globaltradlinemap = dbobj.getuniquetransposeId(h2con);
+				
 				CommonObjects.GlobalAmazeValuesF1 = dbobj.getInitialAmazevalues(h2con);
+				CommonObjects.GlobalAmazeCenterValuesF2 = dbobj.getInitialAmazecentervalues(h2con);
+				CommonObjects.GlobalAmazeValuesF3 = dbobj.getInitialAmazevalues(h2con);
+				CommonObjects.GlobalAmazeValuesF4 = dbobj.getInitialAmazevalues(h2con);
+				CommonObjects.GlobalAmazeValuesF5 = dbobj.getInitialAmazevalues(h2con);
+				CommonObjects.GlobalAmazeValuesF6 = dbobj.getInitialAmazevalues(h2con);
+				
 				CommonObjects.GlobalTradeInfo = new ArrayList<Tradeinfo>();
-//				FeedAPITesterWithQueue objfeeder =new FeedAPITesterWithQueue();
-//				 new Thread(() -> {
-//					 objfeeder.startfeed();
-//				 }).start();			
+				FeedAPITesterWithQueue objfeeder =new FeedAPITesterWithQueue();
+				 new Thread(() -> {
+					 objfeeder.startfeed();
+				 }).start();
+				 btnrun.setEnabled(false);
+				 btnclear.setEnabled(false);
+				 btndcsv.setEnabled(false);
+				 btnstop.setEnabled(true);
 			}
 		});
 		btnrun.setPreferredSize(new Dimension(150, 35));
@@ -273,7 +305,8 @@ public class BeastView implements KeyListener{
 			{
 				int opcion = JOptionPane.showConfirmDialog(null, "Are you sure, Want to Clear ?\n It will get deleted point from dashboard & TradeInfo.", "Clear Trades", JOptionPane.YES_NO_OPTION);
 				if (opcion == 0) {
-				dbobj.executeNonQuery(h2con, "UPDATE TBL_BEAST_VIEW set F1POINT=0, F2POINT=0, F3POINT=0, F4POINT=0, F5POINT=0 where id > 0;");
+				dbobj.executeNonQuery(h2con, "UPDATE TBL_BEAST_VIEW set F1POINT=0, F2POINT=0, F3POINT=0, F4POINT=0, F5POINT=0 ,F6POINT=0,"
+						+ "F1PL=0, F2PL=0, F3PL=0, F4PL=0, F5PL=0 ,F6PL=0 where id > 0;");
 				dbobj.executeNonQuery(h2con, "DELETE FROM TBL_TRADE_INFO;");
 				}
 			}
@@ -286,30 +319,56 @@ public class BeastView implements KeyListener{
 			{				
 				try
 				{
-				    String [] updatebeastview = new String[CommonObjects.GlobalBeastViewList.size()];
-				    int i = 0;
-				    for (BeastViewList bv : CommonObjects.GlobalBeastViewList) 
-				    {
-				    	updatebeastview[i] = "UPDATE TBL_BEAST_VIEW SET F1POINT="+bv.getF1Point()+", F2POINT="+bv.getF2Point()+","
-				    			+ "F3POINT="+bv.getF3Point()+",F4POINT="+bv.getF4Point()+" ,F5POINT="+bv.getF5Point()+",F6POINT="+bv.getF6Point()+""
-				    					+ ",F1PL="+bv.getF1PL()+",F2PL="+bv.getF2PL()+",F3PL="+bv.getF3PL()+",F4PL="+bv.getF4PL()+",F5PL="+bv.getF5PL()+",F6PL="+bv.getF6PL()+" WHERE ID="+bv.getid()+";";
-				    	i++;
+					Date date = new Date() ;
+					SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm") ;
+					dateFormat.format(date);
+					System.out.println(dateFormat.format(date));
+					boolean confirmation = false;
+					if(dateFormat.parse(dateFormat.format(date)).before(dateFormat.parse("15:30")))
+					{
+						String exitcode ="0";
+				        JFrame exitframe = new JFrame("Confirm Stop !!");
+				        exitcode = JOptionPane.showInputDialog(exitframe, "Stoping Before 15:30 Lead to Incomplete Trades.\nEnter Secret Code to Force Stop #");
+				        if(exitcode.equalsIgnoreCase("7"))
+				        {
+				        	confirmation = true;
+				        }
+					    
 					}
-				    dbobj.executeBatchStatement(h2con, updatebeastview);
-				    dbobj.executeNonQuery(h2con, "DELETE FROM TBL_TRADE_INFO;");
-				    i=0;
-				    String [] insettradeinfo = new String[CommonObjects.GlobalTradeInfo.size()];
-				    for(Tradeinfo ti : CommonObjects.GlobalTradeInfo)
-				    {
-				    	insettradeinfo[i] = "INSERT INTO TBL_TRADE_INFO (ID,FNAME,ORDERTYPE,WAY,FST,ORDERID,PRICE) VALUES ("+ti.getid()+","
-				    			+ "'"+ti.getFname()+"','"+ti.getOrdertype()+"','"+ti.getway()+"','"+ti.getfst().toString()+"','"+ti.getclientorderid()+"',"+ti.getPrice()+");";
-				    	i++;
-				    }
-				    dbobj.executeBatchStatement(h2con, insettradeinfo);
-				   
-					CommonObjects.isRunning=false;
-					btnrun.setText("RUN");
-					
+					else
+					{
+						confirmation = true;
+					}
+					if (confirmation == true)
+					{
+					    String [] updatebeastview = new String[CommonObjects.GlobalBeastViewList.size()];
+					    int i = 0;
+					    for (BeastViewList bv : CommonObjects.GlobalBeastViewList) 
+					    {
+					    	updatebeastview[i] = "UPDATE TBL_BEAST_VIEW SET F1POINT="+bv.getF1Point()+", F2POINT="+bv.getF2Point()+","
+					    			+ "F3POINT="+bv.getF3Point()+",F4POINT="+bv.getF4Point()+" ,F5POINT="+bv.getF5Point()+",F6POINT="+bv.getF6Point()+""
+					    					+ ",F1PL="+bv.getF1PL()+",F2PL="+bv.getF2PL()+",F3PL="+bv.getF3PL()+",F4PL="+bv.getF4PL()+",F5PL="+bv.getF5PL()+",F6PL="+bv.getF6PL()+" WHERE ID="+bv.getid()+";";
+					    	i++;
+						}
+					    dbobj.executeBatchStatement(h2con, updatebeastview);
+					    dbobj.executeNonQuery(h2con, "DELETE FROM TBL_TRADE_INFO;");
+					    i=0;
+					    String [] insettradeinfo = new String[CommonObjects.GlobalTradeInfo.size()];
+					    for(Tradeinfo ti : CommonObjects.GlobalTradeInfo)
+					    {
+					    	insettradeinfo[i] = "INSERT INTO TBL_TRADE_INFO (ID,FNAME,ORDERTYPE,WAY,FST,ORDERID,PRICE) VALUES ("+ti.getid()+","
+					    			+ "'"+ti.getFname()+"','"+ti.getOrdertype()+"','"+ti.getway()+"','"+ti.getfst().toString()+"','"+ti.getclientorderid()+"',"+ti.getPrice()+");";
+					    	i++;
+					    }
+					    dbobj.executeBatchStatement(h2con, insettradeinfo);
+					   
+						CommonObjects.isRunning=false;
+						btnrun.setText("RUN");
+						btnrun.setEnabled(true);
+						btndcsv.setEnabled(true);
+						btnclear.setEnabled(true);
+						btnstop.setEnabled(false);
+					}
 				}
 				catch(Exception ex)
 				{
@@ -319,6 +378,7 @@ public class BeastView implements KeyListener{
 			}
 		});
 		btnstop.setPreferredSize(new Dimension(150, 35));
+		btnstop.setEnabled(false);
 		pnldowncenter.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		pnldowncenter.add(btnrun);
 		pnldowncenter.add(btndcsv);
@@ -330,16 +390,6 @@ public class BeastView implements KeyListener{
 		pnlmiddle.setBackground(new Color(51, 51, 51));
 		frmBeastview.getContentPane().add(pnlmiddle, BorderLayout.CENTER);
 		
-		
-		frmBeastview.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frmBeastview.addWindowListener(new WindowAdapter() {
-	        @Override
-	        public void windowClosing(WindowEvent event) {
-	        	System.out.println("Bye Bye ...");
-	        	frmBeastview.dispose();
-	            System.exit(0);
-	        }
-	    });
 		
 	    frmBeastview.setSize((int)width, (int)height-40);
 	    frmBeastview.setResizable(false);
@@ -379,29 +429,20 @@ public class BeastView implements KeyListener{
 			        	returnComp.setFont(new Font("Tahoma", Font.PLAIN, 0));
 		        	}
 			        else
-			        {	
+			        {	if (value > 0)
+			        	{
+			        		returnComp.setForeground(new Color(255,220,135));
+			        	}
+			        	else if (value < 0)
+			        	{
+			        		returnComp.setForeground(new Color(103,186,233));
+			        	}
 				        if (column % 2 != 0)
 				        {
-				        	if (value > 0)
-				        	{
-				        		returnComp.setForeground(new Color(255,220,135));
-				        	}
-				        	else if (value < 0)
-				        	{
-				        		returnComp.setForeground(new Color(103,186,233));
-				        	}
 				        	returnComp.setFont(new Font("Tahoma", Font.BOLD, 12));
 				        }
 				        else
 				        {
-				        	if (value > 0)
-				        	{
-				        		returnComp.setForeground(Color.GREEN);
-				        	}
-				        	else if (value < 0)
-				        	{
-				        		returnComp.setForeground(Color.RED);
-				        	}
 				        	returnComp.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				        }
 				        
@@ -435,7 +476,7 @@ public class BeastView implements KeyListener{
 	    scrollPane.setBackground(new Color(51, 51, 51));
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportBorder(null);
-		scrollPane.setPreferredSize(new Dimension((int)width-25, (int)height-230));
+		scrollPane.setPreferredSize(new Dimension((int)width-25, (int)height-190));
 		scrollPane.setBorder(null);
 		scrollPane.setColumnHeaderView(new JViewport() {
 		      @Override public Dimension getPreferredSize() {
@@ -519,8 +560,38 @@ public class BeastView implements KeyListener{
             		            }
             		            else
             		            {
+            		            	totalvalues=new String[][]{{"Total", "0","0", "0","0", "0","0", "0","0", "0","0", "0","0"}};
             		            	mainmodel = new  BeastViewListTableModel(CommonObjects.GlobalBeastViewList);
-            		            	totmodel = new DefaultTableModel(CommonObjects.GlobalBeastViewTotal, totalhead);
+            		            	//getting total from main model
+            		            	int temp;
+            		            	for (int i=0 ; i < mainmodel.getRowCount() ; i++)
+            		            	{
+            		            		temp =(int) mainmodel.getValueAt(i, 2);
+            		            		totalvalues[0][1] =String.valueOf(Integer.parseInt((String) totalvalues[0][1])+temp);
+            		            		temp =(int) mainmodel.getValueAt(i, 3);
+            		            		totalvalues[0][2] =String.valueOf(Integer.parseInt((String) totalvalues[0][2])+temp);
+            		            		temp =(int) mainmodel.getValueAt(i, 4);
+            		            		totalvalues[0][3] =String.valueOf(Integer.parseInt((String) totalvalues[0][3])+temp);
+            		            		temp =(int) mainmodel.getValueAt(i, 5);
+            		            		totalvalues[0][4] =String.valueOf(Integer.parseInt((String) totalvalues[0][4])+temp);
+            		            		temp =(int) mainmodel.getValueAt(i, 6);
+            		            		totalvalues[0][5] =String.valueOf(Integer.parseInt((String) totalvalues[0][5])+temp);
+            		            		temp =(int) mainmodel.getValueAt(i, 7);
+            		            		totalvalues[0][6] =String.valueOf(Integer.parseInt((String) totalvalues[0][6])+temp);
+            		            		temp =(int) mainmodel.getValueAt(i, 8);
+            		            		totalvalues[0][7] =String.valueOf(Integer.parseInt((String) totalvalues[0][7])+temp);
+            		            		temp =(int) mainmodel.getValueAt(i, 9);
+            		            		totalvalues[0][8] =String.valueOf(Integer.parseInt((String) totalvalues[0][8])+temp);
+            		            		temp =(int) mainmodel.getValueAt(i, 10);
+            		            		totalvalues[0][9] =String.valueOf(Integer.parseInt((String) totalvalues[0][9])+temp);
+            		            		temp =(int) mainmodel.getValueAt(i, 11);
+            		            		totalvalues[0][10] =String.valueOf(Integer.parseInt((String) totalvalues[0][10])+temp);
+            		            		temp =(int) mainmodel.getValueAt(i, 12);
+            		            		totalvalues[0][11] =String.valueOf(Integer.parseInt((String) totalvalues[0][11])+temp);
+            		            		temp =(int) mainmodel.getValueAt(i, 13);
+            		            		totalvalues[0][12] =String.valueOf(Integer.parseInt((String) totalvalues[0][12])+temp);
+            		            	}
+            		            	totmodel = new DefaultTableModel(totalvalues, totalhead);
             		            }
             		            maintable.setModel(mainmodel);
             		            columnModel = maintable.getColumnModel();

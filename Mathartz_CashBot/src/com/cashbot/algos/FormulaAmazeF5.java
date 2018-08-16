@@ -11,11 +11,11 @@ import com.cashbot.collection.SquadScripts;
 import com.cashbot.collection.Tradeinfo;
 import com.cashbot.collection.getListcommon;
 
-public class FormulaAmaze {
+public class FormulaAmazeF5 {
 	//amaze execution related data
 	int identity,c,lc,r;
 	String headsecid,playersecid,way;
-	double ltp, points,low,high,nextline,baseline;
+	double ltp, points,low,high,nextline,baseline,tpl;
 	Date ltt;
 	//Amaze formula inputs data
 	double x,y;
@@ -28,6 +28,7 @@ public class FormulaAmaze {
 	Amazevalues fvalue= null;
 	FormulaData finput =null;
 	BeastViewList bv = null;
+	String fname = "F5";
 	
 	
 	public void FormulaAmazeDriver(String [] ids, double LTP, Date LTT)
@@ -41,7 +42,7 @@ public class FormulaAmaze {
 			for (String id : ids) 
 			{
 				identity = Integer.valueOf(id);
-				finput = listcom.getFormulaDataByID(identity,  CommonObjects.GlobalAmazeF1);
+				finput = listcom.getFormulaDataByID(identity,  CommonObjects.GlobalAmazeF5);
 				if (finput != null)
 				{
 					if (!finput.getIsend())
@@ -66,10 +67,15 @@ public class FormulaAmaze {
 	{
 		try
 		{
-			fvalue.SetAmazevalues(c, lc, r, points, low, high, nextline, baseline, way);
+			fvalue.SetAmazevalues(c, lc, r, points, low, high, nextline, baseline, way,tpl);
 			finput.setIsend(isend);
 			bv = listcom.getBeastViewListByID(identity,CommonObjects.GlobalBeastViewList);
 			bv.setF1Point(points);
+			if ((way.equalsIgnoreCase("L3"))||(way.equalsIgnoreCase("L2"))||(way.equalsIgnoreCase("R3"))||(way.equalsIgnoreCase("R2")))
+			{
+				bv.setF1PL(tpl);
+			}
+			
 		}
 		catch(Exception ex)
 		{
@@ -82,7 +88,7 @@ public class FormulaAmaze {
 		try
 		{
 			
-			fvalue = listcom.getAmazeValuesByID(identity, CommonObjects.GlobalAmazeValuesF1);
+			fvalue = listcom.getAmazeValuesByID(identity, CommonObjects.GlobalAmazeValuesF5);
 			c = fvalue.getc();
 			lc = fvalue.getlc();
 			r = fvalue.getr();
@@ -93,6 +99,7 @@ public class FormulaAmaze {
 			high = fvalue.gethigh();
 			nextline = fvalue.getnextline();
 			baseline = fvalue.getbaseline();
+			tpl = fvalue.gettpl();
 			
 			x =finput.getX();
 			y = finput.getY();
@@ -207,11 +214,12 @@ public class FormulaAmaze {
 						//Entering Market By BUY command
 						String strorderid =null;
 						strorderid = placeorder(identity, qty,"BUY");
-						Tradeinfo ti=new Tradeinfo(identity, "F1", "BUY", "L1", ltt, strorderid, ltp);
+						Tradeinfo ti=new Tradeinfo(identity, fname, "BUY", "L1", ltt, strorderid, ltp);
 						CommonObjects.GlobalTradeInfo.add(ti);
 						way = "L1";
 						nextline = low + (low*(x/100));
 						baseline = low;
+						tpl = ((ltp * qty) * -1);
 					}
 					Isboxed = true;
 				}
@@ -237,12 +245,14 @@ public class FormulaAmaze {
 			  {
 				  // SELLING PARTIAL CODE
 				  strorderid = placeorder(identity, (int) (qty/2),"SELL");
+				  tpl = (tpl + (ltp * (int) (qty/2)));
 			  }
 			  else
 			  {
 				  strorderid = placeorder(identity, qty,"SELL");
+				  tpl = (tpl + (ltp * qty));
 			  }
-			  Tradeinfo ti=new Tradeinfo(identity, "F1", "SELL", "L2", ltt, strorderid, ltp);
+			  Tradeinfo ti=new Tradeinfo(identity, fname, "SELL", "L2", ltt, strorderid, ltp);
 			  CommonObjects.GlobalTradeInfo.add(ti);
 			  way = "L2";
 			  isend = true;
@@ -269,18 +279,20 @@ public class FormulaAmaze {
 						String strorderid =null;
 						strorderid = placeorder(identity, qty,"SELL");
 						points = points - 2;
-						Tradeinfo ti=new Tradeinfo(identity, "F1", "SELL", "L3", ltt, strorderid, ltp);
+						Tradeinfo ti=new Tradeinfo(identity, fname, "SELL", "L3", ltt, strorderid, ltp);
 						CommonObjects.GlobalTradeInfo.add(ti);
 						way = "L3";
+						tpl = (tpl + (ltp*qty));
 					}
 					else
 					{
 						String strorderid =null;
 						strorderid = placeorder(identity, (int)(qty/2),"SELL");
 						points = points - 1;
-						Tradeinfo ti=new Tradeinfo(identity, "F1", "SELL", "L3", ltt, strorderid, ltp);
+						Tradeinfo ti=new Tradeinfo(identity, fname, "SELL", "L3", ltt, strorderid, ltp);
 						CommonObjects.GlobalTradeInfo.add(ti);
 						way = "L3";
+						tpl = (tpl + (ltp*(int)(qty/2)));
 					}
 					c = c-1;
 					r = r+1;
@@ -323,9 +335,10 @@ public class FormulaAmaze {
 						String strorderid =null;
 						strorderid = placeorder(identity, (int) (qty/2),"SELL");
 						points = points +1;
-						Tradeinfo ti=new Tradeinfo(identity, "F1", "SELL", "L4", ltt, strorderid, ltp);
+						Tradeinfo ti=new Tradeinfo(identity, fname, "SELL", "L4", ltt, strorderid, ltp);
 						CommonObjects.GlobalTradeInfo.add(ti);
 						way ="L4";
+						tpl = (tpl + (ltp * (int) (qty/2)));
 					}
 					Isboxed = true;
 				}
@@ -356,10 +369,11 @@ public class FormulaAmaze {
 					{
 						String strorderid =null;
 						strorderid = placeorder(identity, qty,"BUY");
-						Tradeinfo ti=new Tradeinfo(identity, "F1", "BUY", "L5", ltt, strorderid, ltp);
+						Tradeinfo ti=new Tradeinfo(identity, fname, "BUY", "L5", ltt, strorderid, ltp);
 						CommonObjects.GlobalTradeInfo.add(ti);
 						way="L5";
 						nextline = (baseline + (baseline*(x/100)));
+						tpl = (tpl + ((ltp*qty) * -1));
 					}
 					Isboxed = true;
 				}
@@ -398,11 +412,12 @@ public class FormulaAmaze {
 						//Entering Market By SELL command
 						String strorderid =null;
 						strorderid = placeorder(identity, qty,"SELL");
-						Tradeinfo ti=new Tradeinfo(identity, "F1", "SELL", "R1", ltt, strorderid, ltp);
+						Tradeinfo ti=new Tradeinfo(identity, fname, "SELL", "R1", ltt, strorderid, ltp);
 						CommonObjects.GlobalTradeInfo.add(ti);
 						way = "R1";
 						nextline = high - (high*(x/100));
 						baseline = high;
+						tpl = (ltp * qty);
 					}
 					Isboxed = true;
 				}
@@ -426,12 +441,15 @@ public class FormulaAmaze {
 					if (c >=1 )
 					{
 						strorderid = placeorder(identity, (int) (qty/2),"BUY");
+						tpl = (tpl + ((ltp * (int) (qty/2)) * -1));
+								
 					}
 					else
 					{
 						strorderid = placeorder(identity, qty,"BUY");
+						tpl = (tpl + ((ltp * qty) * -1));
 					}
-					Tradeinfo ti=new Tradeinfo(identity, "F1", "BUY", "R2", ltt, strorderid, ltp);
+					Tradeinfo ti=new Tradeinfo(identity, fname, "BUY", "R2", ltt, strorderid, ltp);
 					CommonObjects.GlobalTradeInfo.add(ti);
 					way = "R2";
 					isend = true;
@@ -457,19 +475,21 @@ public class FormulaAmaze {
 					{
 						String strorderid =null;
 						strorderid = placeorder(identity, qty,"BUY");
-						Tradeinfo ti=new Tradeinfo(identity, "F1", "BUY", "R3", ltt, strorderid, ltp);
+						Tradeinfo ti=new Tradeinfo(identity, fname, "BUY", "R3", ltt, strorderid, ltp);
 						way = "R3";
 						CommonObjects.GlobalTradeInfo.add(ti);
 						points = points-2;
+						tpl = (tpl + ((ltp * qty) * -1));
 					}
 					else
 					{
 						String strorderid = null;
 						strorderid = placeorder(identity, (int) (qty/2),"BUY");
-						Tradeinfo ti=new Tradeinfo(identity, "F1", "BUY", "R3", ltt, strorderid, ltp);
+						Tradeinfo ti=new Tradeinfo(identity, fname, "BUY", "R3", ltt, strorderid, ltp);
 						way = "R3";
 						CommonObjects.GlobalTradeInfo.add(ti);
 						points = points-1;
+						tpl = (tpl + ((ltp * (int) (qty/2)) * -1));
 					}
 					c = c-1;
 					r = r+1;
@@ -511,10 +531,11 @@ public class FormulaAmaze {
 					{
 						String strorderid;
 						strorderid = placeorder(identity, (int) (qty/2),"BUY");
-						Tradeinfo ti=new Tradeinfo(identity, "F1", "BUY", "R4", ltt, strorderid, ltp);
+						Tradeinfo ti=new Tradeinfo(identity, fname, "BUY", "R4", ltt, strorderid, ltp);
 						way = "R4";
 						CommonObjects.GlobalTradeInfo.add(ti);
 						points = points+1;
+						tpl = (tpl + ((ltp * (int) (qty/2)) * -1));
 					}
 					Isboxed = true;
 				}
@@ -541,10 +562,11 @@ public class FormulaAmaze {
 					else
 					{
 						strorderid = placeorder(identity, qty,"SELL");
-						Tradeinfo ti=new Tradeinfo(identity, "F1", "SELL", "R5", ltt, strorderid, ltp);
+						Tradeinfo ti=new Tradeinfo(identity, fname, "SELL", "R5", ltt, strorderid, ltp);
 						CommonObjects.GlobalTradeInfo.add(ti);
 						way = "R5";
 						nextline = (baseline - (baseline*(x/100)));
+						tpl = tpl + (ltp * qty);
 					}
 					Isboxed = true;
 				}

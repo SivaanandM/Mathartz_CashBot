@@ -1,14 +1,14 @@
 package com.cashbot.collection;
 
-public class Amazevalues {
+public class AmazeCentervalues {
 	
 	int id;
 	String headsecid, way;
 	int C, LC, R;
-	double points, low, high, nextline, baseline;
+	double points, low, high, nextline, baseline,spoint;
 	double tpl;
 	
-	public Amazevalues(int id, String headsecid, int c, int lc, int r, double points, double low, double high, double nextline, double baseline, String way, double tpl)
+	public AmazeCentervalues(int id, String headsecid, int c, int lc, int r, double points, double low, double high, double nextline, double baseline, String way, double tpl, double spoint)
 	{
 		this.id = id;
 		this.headsecid = headsecid;
@@ -22,6 +22,7 @@ public class Amazevalues {
 		this.baseline = baseline;
 		this.way = way;
 		this.tpl = tpl;
+		this.spoint = spoint;
 	}
 	public int getid()
 	{
@@ -71,10 +72,14 @@ public class Amazevalues {
 	{
 		return tpl;
 	}
+	public Double getspoint()
+	{
+		return spoint;
+	}
 	public String[] getData()
 	{
 	    return new String[]{String.valueOf(id), headsecid, String.valueOf(LC), String.valueOf(R), 
-	    		String.valueOf(points), String.valueOf(low), String.valueOf(high), String.valueOf(nextline), String.valueOf(baseline), way, String.valueOf(tpl)};
+	    		String.valueOf(points), String.valueOf(low), String.valueOf(high), String.valueOf(nextline), String.valueOf(baseline), way, String.valueOf(tpl),String.valueOf(spoint)};
 	}
 	
 	public void setc(int cval)
@@ -117,8 +122,11 @@ public class Amazevalues {
 	{
 		this.tpl = tpl;
 	}
-	
-	public void SetAmazevalues(int c, int lc, int r, double points, double low, double high, double nextline, double baseline, String way, double tpl)
+	public void setspoint(double spoint)
+	{
+		this.spoint = spoint;
+	}
+	public void SetAmazeCentervalues(int c, int lc, int r, double points, double low, double high, double nextline, double baseline, String way, double tpl, double spoint)
 	{
 		this.C = c;
 		this.LC = lc;
@@ -130,6 +138,7 @@ public class Amazevalues {
 		this.baseline = baseline;
 		this.way = way;
 		this.tpl = tpl;
+		this.spoint = spoint;
 	}
 	
 

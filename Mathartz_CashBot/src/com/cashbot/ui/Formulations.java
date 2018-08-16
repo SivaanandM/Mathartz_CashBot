@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Connection;
@@ -11,8 +12,12 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.text.Document;
+
 import com.cashbot.commons.DbFuncs;
 import com.cashbot.collection.FormulaData;
 import javax.swing.JTextField;
@@ -37,6 +42,7 @@ public class Formulations {
 	private JTextField txtlcount;
 	private JTextField txtround;
 	private JTextField txtqty;
+	private JButton btndelete ;
 	JButton btnsave;
 	String Fname , HeadName;
 	int Identity;
@@ -77,6 +83,7 @@ public class Formulations {
 		List<FormulaData> fd = objdb.getFormulaData(h2con, "SELECT * FROM TBL_FORMULA_DATA WHERE FNAME='"+Fname+"' and ID="+Identity+";");
 		if (fd.size() > 0)
 		{
+			btndelete.setVisible(true);
 			txtx.setText(String.valueOf(fd.get(0).getX()));
 			txty.setText(String.valueOf(fd.get(0).getY()));
 			txtsthh.setText(String.valueOf(fd.get(0).getST().split(":")[0]));
@@ -103,6 +110,18 @@ public class Formulations {
 			
 		}
 	}
+	private Boolean validateForm()
+	{
+		Boolean conf = false;
+		if ((! txtx.getText().trim().equals("")) && (! txty.getText().trim().equals("")) && 
+				(Double.valueOf(txtx.getText()) != 0) && (Double.valueOf(txty.getText()) != 0) && (! txtsthh.getText().trim().equals("")) && (! txtstmm.getText().trim().equals("")) && ((Integer.parseInt(txtqty.getText()) % 2) == 0))
+		{
+			
+				conf = true;
+			
+		}
+		return conf;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -114,7 +133,7 @@ public class Formulations {
 		frmformula = new JFrame("Formula Inputs - "+ Fname);
 		frmformula.getContentPane().setBackground(new Color(51, 51, 51));
 		frmformula.setVisible(true);
-		frmformula.setBounds(100, 100, 305, 623);
+		frmformula.setBounds(100, 100, 305, 612);
 		frmformula.setBackground(new Color(36,34,29));
 		frmformula.getContentPane().setLayout(null);
 		frmformula.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -125,7 +144,7 @@ public class Formulations {
 		panel.setLayout(null);
 		panel.setForeground(Color.WHITE);
 		panel.setBackground(new Color(80, 75, 78));
-		panel.setBounds(10, 43, 279, 541);
+		panel.setBounds(10, 43, 279, 531);
 		frmformula.getContentPane().add(panel);
 		
 		JLabel lblX = new JLabel("X");
@@ -185,6 +204,16 @@ public class Formulations {
 		txtx.setCaretColor(Color.WHITE);
 		txtx.setBackground(new Color(36, 34, 29));
 		txtx.setBounds(143, 10, 81, 41);
+		txtx.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		      char c = e.getKeyChar();
+		      if (!((c >= '0') && (c <= '9') || (c == '.') ||
+		         (c == KeyEvent.VK_BACK_SPACE) ||
+		         (c == KeyEvent.VK_DELETE) )) {
+		        e.consume();
+		      }
+		    }
+		  });
 		panel.add(txtx);
 		
 		txty = new JTextField();
@@ -195,6 +224,16 @@ public class Formulations {
 		txty.setCaretColor(Color.WHITE);
 		txty.setBackground(new Color(36, 34, 29));
 		txty.setBounds(143, 61, 81, 39);
+		txty.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		      char c = e.getKeyChar();
+		      if (!((c >= '0') && (c <= '9') || (c == '.')||
+		         (c == KeyEvent.VK_BACK_SPACE) ||
+		         (c == KeyEvent.VK_DELETE))) {
+		        e.consume();
+		      }
+		    }
+		  });
 		panel.add(txty);
 		
 		txtsthh = new JTextField();
@@ -205,6 +244,16 @@ public class Formulations {
 		txtsthh.setCaretColor(Color.WHITE);
 		txtsthh.setBackground(new Color(36, 34, 29));
 		txtsthh.setBounds(143, 109, 48, 42);
+		txtsthh.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		      char c = e.getKeyChar();
+		      if (!((c >= '0') && (c <= '9') ||
+		         (c == KeyEvent.VK_BACK_SPACE) ||
+		         (c == KeyEvent.VK_DELETE))) {
+		        e.consume();
+		      }
+		    }
+		  });
 		panel.add(txtsthh);
 		
 		txtmthh = new JTextField();
@@ -216,6 +265,16 @@ public class Formulations {
 		txtmthh.setCaretColor(Color.WHITE);
 		txtmthh.setBackground(new Color(36, 34, 29));
 		txtmthh.setBounds(143, 158, 48, 42);
+		txtmthh.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		      char c = e.getKeyChar();
+		      if (!((c >= '0') && (c <= '9') ||
+		         (c == KeyEvent.VK_BACK_SPACE) ||
+		         (c == KeyEvent.VK_DELETE))) {
+		        e.consume();
+		      }
+		    }
+		  });
 		panel.add(txtmthh);
 		
 		txtethh = new JTextField();
@@ -227,6 +286,16 @@ public class Formulations {
 		txtethh.setCaretColor(Color.WHITE);
 		txtethh.setBackground(new Color(36, 34, 29));
 		txtethh.setBounds(143, 209, 48, 42);
+		txtethh.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		      char c = e.getKeyChar();
+		      if (!((c >= '0') && (c <= '9') ||
+		         (c == KeyEvent.VK_BACK_SPACE) ||
+		         (c == KeyEvent.VK_DELETE))) {
+		        e.consume();
+		      }
+		    }
+		  });
 		panel.add(txtethh);
 		
 		JLabel label_9 = new JLabel(":");
@@ -243,6 +312,16 @@ public class Formulations {
 		txtstmm.setCaretColor(Color.WHITE);
 		txtstmm.setBackground(new Color(36, 34, 29));
 		txtstmm.setBounds(199, 109, 48, 42);
+		txtstmm.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		      char c = e.getKeyChar();
+		      if (!((c >= '0') && (c <= '9') ||
+		         (c == KeyEvent.VK_BACK_SPACE) ||
+		         (c == KeyEvent.VK_DELETE))) {
+		        e.consume();
+		      }
+		    }
+		  });
 		panel.add(txtstmm);
 		
 		JLabel label_11 = new JLabel(":");
@@ -260,6 +339,16 @@ public class Formulations {
 		txtmtmm.setCaretColor(Color.WHITE);
 		txtmtmm.setBackground(new Color(36, 34, 29));
 		txtmtmm.setBounds(199, 158, 48, 42);
+		txtmtmm.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		      char c = e.getKeyChar();
+		      if (!((c >= '0') && (c <= '9') ||
+		         (c == KeyEvent.VK_BACK_SPACE) ||
+		         (c == KeyEvent.VK_DELETE))) {
+		        e.consume();
+		      }
+		    }
+		  });
 		panel.add(txtmtmm);
 		
 		JLabel label_13 = new JLabel(":");
@@ -277,6 +366,16 @@ public class Formulations {
 		txtetmm.setCaretColor(Color.WHITE);
 		txtetmm.setBackground(new Color(36, 34, 29));
 		txtetmm.setBounds(201, 209, 48, 42);
+		txtetmm.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		      char c = e.getKeyChar();
+		      if (!((c >= '0') && (c <= '9') ||
+		         (c == KeyEvent.VK_BACK_SPACE) ||
+		         (c == KeyEvent.VK_DELETE))) {
+		        e.consume();
+		      }
+		    }
+		  });
 		panel.add(txtetmm);
 		
 		txtlcount = new JTextField();
@@ -288,6 +387,16 @@ public class Formulations {
 		txtlcount.setCaretColor(Color.WHITE);
 		txtlcount.setBackground(new Color(36, 34, 29));
 		txtlcount.setBounds(143, 257, 104, 49);
+		txtlcount.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		      char c = e.getKeyChar();
+		      if (!((c >= '0') && (c <= '9') ||
+		         (c == KeyEvent.VK_BACK_SPACE) ||
+		         (c == KeyEvent.VK_DELETE))) {
+		        e.consume();
+		      }
+		    }
+		  });
 		panel.add(txtlcount);
 		
 		txtround = new JTextField();
@@ -299,6 +408,16 @@ public class Formulations {
 		txtround.setCaretColor(Color.WHITE);
 		txtround.setBackground(new Color(36, 34, 29));
 		txtround.setBounds(143, 312, 104, 49);
+		txtround.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		      char c = e.getKeyChar();
+		      if (!((c >= '0') && (c <= '9') ||
+		         (c == KeyEvent.VK_BACK_SPACE) ||
+		         (c == KeyEvent.VK_DELETE))) {
+		        e.consume();
+		      }
+		    }
+		  });
 		panel.add(txtround);
 		
 		JLabel label_17 = new JLabel("%");
@@ -319,26 +438,34 @@ public class Formulations {
 		btnsave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				if (objdb.getRowCount(h2con, "SELECT * FROM TBL_FORMULA_DATA WHERE FNAME='"+Fname+"' and ID="+Identity+";") == 0)
+				boolean confirm = validateForm();
+				if (confirm)
 				{
-					String insert = "INSERT INTO TBL_FORMULA_DATA (ID,FNAME,X,Y,ST,MT,ET,LCOUNT,ROUND,QTY,TRADESWITCH, ISEND) VALUES"
-							+ " ("+Identity+",'"+Fname+"',"+txtx.getText()+","+txty.getText()+",'"+txtsthh.getText()+":"+txtstmm.getText()+"'"
-									+ ", '"+txtmthh.getText()+":"+txtmtmm.getText()+"','"+txtethh.getText()+":"+txtetmm.getText()+"',"+txtlcount.getText()+","
-											+ txtround.getText() +","+txtqty.getText()+","+chckbxTradeSwitch.isSelected()+",false);";
-					objdb.executeNonQuery(h2con, insert);
+					if (objdb.getRowCount(h2con, "SELECT * FROM TBL_FORMULA_DATA WHERE FNAME='"+Fname+"' and ID="+Identity+";") == 0)
+					{
+						String insert = "INSERT INTO TBL_FORMULA_DATA (ID,FNAME,X,Y,ST,MT,ET,LCOUNT,ROUND,QTY,TRADESWITCH, ISEND) VALUES"
+								+ " ("+Identity+",'"+Fname+"',"+txtx.getText()+","+txty.getText()+",'"+txtsthh.getText()+":"+txtstmm.getText()+"'"
+										+ ", '"+txtmthh.getText()+":"+txtmtmm.getText()+"','"+txtethh.getText()+":"+txtetmm.getText()+"',"+txtlcount.getText()+","
+												+ txtround.getText() +","+txtqty.getText()+","+chckbxTradeSwitch.isSelected()+",false);";
+						objdb.executeNonQuery(h2con, insert);
+					}
+					else
+					{
+						String update ="UPDATE TBL_FORMULA_DATA SET X="+txtx.getText()+", Y="+txty.getText()+",ST='"+txtsthh.getText()+":"+txtstmm.getText()+"',"
+								+ " MT='"+txtmthh.getText()+":"+txtmtmm.getText()+"', ET='"+txtethh.getText()+":"+txtetmm.getText()+"',"
+										+ "LCOUNT="+txtlcount.getText()+", ROUND="+txtround.getText()+", QTY="+txtqty.getText()+", TRADESWITCH="+chckbxTradeSwitch.isSelected()+" "
+												+ ", ISEND=false WHERE FNAME='"+Fname+"' and ID="+Identity+";";
+						objdb.executeNonQuery(h2con, update);
+					}
+					frmformula.dispose();
 				}
 				else
 				{
-					String update ="UPDATE TBL_FORMULA_DATA SET X="+txtx.getText()+", Y="+txty.getText()+",ST='"+txtsthh.getText()+":"+txtstmm.getText()+"',"
-							+ " MT='"+txtmthh.getText()+":"+txtmtmm.getText()+"', ET='"+txtethh.getText()+":"+txtetmm.getText()+"',"
-									+ "LCOUNT="+txtlcount.getText()+", ROUND="+txtround.getText()+", QTY="+txtqty.getText()+", TRADESWITCH="+chckbxTradeSwitch.isSelected()+" "
-											+ ", ISEND=false WHERE FNAME='"+Fname+"' and ID="+Identity+";";
-					objdb.executeNonQuery(h2con, update);
+					JOptionPane.showMessageDialog(frmformula, "Verify Inputs. Empty data or Invalid value", "Invalid Data", JOptionPane.PLAIN_MESSAGE);
 				}
-				frmformula.dispose();
 			}
 		});
-		btnsave.setBounds(10, 484, 256, 45);
+		btnsave.setBounds(10, 484, 259, 31);
 		panel.add(btnsave);
 		
 		JPanel panel_1 = new JPanel();
@@ -415,30 +542,48 @@ public class Formulations {
 		txtqty.setCaretColor(Color.WHITE);
 		txtqty.setBackground(new Color(36, 34, 29));
 		txtqty.setBounds(143, 366, 104, 41);
+		txtqty.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		      char c = e.getKeyChar();
+		      if (!((c >= '0') && (c <= '9') ||
+		         (c == KeyEvent.VK_BACK_SPACE) ||
+		         (c == KeyEvent.VK_DELETE))) {
+		        e.consume();
+		      }
+		    }
+		  });
 		panel.add(txtqty);
 		
-		JLabel lblScript = new JLabel("SCRIPT - ");
-		lblScript.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblScript.setForeground(Color.WHITE);
-		lblScript.setFont(new Font("Verdana", Font.PLAIN, 16));
-		lblScript.setBounds(0, 11, 145, 29);
-		frmformula.getContentPane().add(lblScript);
-		
 		JLabel lblheadname = new JLabel(HeadName);
-		lblheadname.setHorizontalAlignment(SwingConstants.LEFT);
+		lblheadname.setHorizontalAlignment(SwingConstants.CENTER);
 		lblheadname.setForeground(new Color(255, 220, 135));
 		lblheadname.setFont(new Font("Verdana", Font.PLAIN, 16));
-		lblheadname.setBounds(155, 11, 144, 29);
+		lblheadname.setBounds(0, 0, 299, 37);
 		frmformula.getContentPane().add(lblheadname);
+		
+		btndelete = new JButton("X");
+		btndelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				objdb.executeNonQuery(h2con, "DELETE FROM TBL_FORMULA_DATA WHERE FNAME='"+Fname+"' and ID="+Identity+"; ");
+				frmformula.dispose();
+			}
+		});
+		btndelete.setVisible(false);
+		btndelete.setBounds(0, 0, 45, 21);
+		frmformula.getContentPane().add(btndelete);
+		btndelete.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		frmformula.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmformula.addKeyListener(keyhand);
+		
+		
 	}
 	
 	// Key input handlers
 	class InputHandler implements KeyListener
 	{
-        public void keyTyped(KeyEvent kt)
+        public void keyTyped(KeyEvent e)
         {
+        	
         }
         public void keyPressed(java.awt.event.KeyEvent evt)
         {

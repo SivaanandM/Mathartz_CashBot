@@ -13,6 +13,14 @@ public class getListcommon {
 		    }
 		return null;
 	}
+	public AmazeCentervalues getAmazeCenterValuesByID(int id, List<AmazeCentervalues> av)
+	{
+		 for(AmazeCentervalues value : av) {
+		       if(value.getid() == id)
+		          return value;
+		    }
+		return null;
+	}
 	 public BeastViewList getBeastViewListByID(int id, List<BeastViewList> av)
 	 {
 			 for(BeastViewList value : av) {

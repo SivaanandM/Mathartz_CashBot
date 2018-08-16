@@ -22,6 +22,7 @@ import java.util.Properties;
 import org.pmw.tinylog.*;
 import org.pmw.tinylog.writers.FileWriter;
 
+import com.cashbot.collection.AmazeCentervalues;
 import com.cashbot.collection.Amazevalues;
 import com.cashbot.collection.BeastViewList;
 import com.cashbot.collection.FormulaData;
@@ -138,19 +139,7 @@ public class DbFuncs {
 	        	 BeastViewList record = new BeastViewList(rs.getInt("id"),rs.getString("headdisplay"),rs.getDouble("F1Point"),rs.getDouble("F1PL"),rs.getDouble("F2Point"),rs.getDouble("F2PL"),rs.getDouble("F3Point"),rs.getDouble("F3PL"),
 	        			 rs.getDouble("F4Point"),rs.getDouble("F4PL"),rs.getDouble("F5Point"),rs.getDouble("F5PL"),rs.getDouble("F6Point"),rs.getDouble("F6PL"));
 	             set.add(record);
-	             CommonObjects.GlobalBeastViewTotal[0][1] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][1]) + rs.getDouble("F1Point")));
-	             CommonObjects.GlobalBeastViewTotal[0][2] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][2]) + rs.getDouble("F1PL")));
-	             CommonObjects.GlobalBeastViewTotal[0][3] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][3]) + rs.getDouble("F2Point")));
-	             CommonObjects.GlobalBeastViewTotal[0][4] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][4]) + rs.getDouble("F2PL")));
-	             CommonObjects.GlobalBeastViewTotal[0][5] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][5]) + rs.getDouble("F3Point")));
-	             CommonObjects.GlobalBeastViewTotal[0][6] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][6]) + rs.getDouble("F3PL")));
-	             CommonObjects.GlobalBeastViewTotal[0][7] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][7]) + rs.getDouble("F4Point")));
-	             CommonObjects.GlobalBeastViewTotal[0][8] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][8]) + rs.getDouble("F4PL")));
-	             CommonObjects.GlobalBeastViewTotal[0][9] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][9]) + rs.getDouble("F5Point")));
-	             CommonObjects.GlobalBeastViewTotal[0][10] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][10]) + rs.getDouble("F5PL")));
-	             CommonObjects.GlobalBeastViewTotal[0][11] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][11]) + rs.getDouble("F6Point")));
-	             CommonObjects.GlobalBeastViewTotal[0][12] = String.valueOf((Double.parseDouble(CommonObjects.GlobalBeastViewTotal[0][12]) + rs.getDouble("F6PL")));
-	         }
+	          }
 	         if (rs != null) {
 	                rs.close();
 	            }
@@ -457,7 +446,43 @@ public class DbFuncs {
 	         ResultSet rs =stmt.getResultSet(); 
 	         while (rs.next()) {
 	        	 Amazevalues record = new Amazevalues(rs.getInt("ID"),rs.getString("HEADID"),
-	        			 0,0,0,0.0,0.0,0.0,0.0,0.0,"FT");
+	        			 0,0,0,0.0,0.0,0.0,0.0,0.0,"FT",0.0);
+	        	 avs.add(record);
+	         }
+	         
+	         if (rs != null) {
+	                rs.close();
+	            }
+	        
+		}
+		catch(Exception ex){
+			System.out.println(ex.getMessage());
+			Logger.error(ex);
+		}
+		finally {
+			try {
+	            
+	            if (stmt != null) {
+	                stmt.close();
+	            }
+	        } catch (SQLException e) {
+	            Logger.error("Ignored", e);
+	        }	
+		}
+		return avs;
+	}
+	
+	public List<AmazeCentervalues> getInitialAmazecentervalues(Connection con)
+	{
+		List<AmazeCentervalues> avs=new ArrayList<AmazeCentervalues>();
+		try {
+			 conn = CheckandConnectDB(conn);
+	         stmt = conn.createStatement();
+	         stmt.execute("SELECT * FROM TBL_TRADE_LINE;");
+	         ResultSet rs =stmt.getResultSet(); 
+	         while (rs.next()) {
+	        	 AmazeCentervalues record = new AmazeCentervalues(rs.getInt("ID"),rs.getString("HEADID"),
+	        			 0,0,0,0.0,0.0,0.0,0.0,0.0,"FT",0.0,0.0);
 	        	 avs.add(record);
 	         }
 	         

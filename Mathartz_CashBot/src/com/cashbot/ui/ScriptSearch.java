@@ -27,6 +27,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
+import org.h2.engine.DbObject;
+
 import com.cashbot.prestolib.*;
 import com.cashbot.commons.CommonObjects;
 import com.cashbot.commons.DbFuncs;
@@ -47,8 +49,8 @@ public class ScriptSearch {
 	private JFrame frmScriptSearch;
 	private JTextField textSymbol;
 	private JTable table;
+	private JButton btnGetScriptList;
 	private Scriptsdetail records=null;
-	//presto_commons objpresto;
 	TableModel model;
 	DbFuncs objdb;
 	Connection h2con=null;
@@ -172,15 +174,23 @@ public class ScriptSearch {
 				    char keyChar = e.getKeyChar();
 				    if (Character.isLowerCase(keyChar)) {
 				      e.setKeyChar(Character.toUpperCase(keyChar));
-				    }
+				    } 
 				  }
+				  public void keyPressed(KeyEvent key)
+			      {
+
+			      		if(key.getKeyChar() == KeyEvent.VK_ENTER)
+
+			      			btnGetScriptList.doClick();
+
+			      }
 
 				});
 			pnlsearchcontrol.add(textSymbol);
 			DateFormat df = new SimpleDateFormat("MMM-yy"); // Just the year, with 2 digits
 			String formattedDate = df.format(Calendar.getInstance().getTime());
 			
-			JButton btnGetScriptList = new JButton("Add");
+			btnGetScriptList = new JButton("Add");
 			btnGetScriptList.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnGetScriptList.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -279,10 +289,29 @@ public class ScriptSearch {
 			btndeleteall.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) 
 				{
-					objdb.executeNonQuery(h2con, "DELETE FROM TBL_MASTER_CONTRACTS;");
-					String [][] values = objdb.getMultiColumnRecords(h2con, "SELECT SECID, SYMBOL, EXCHANGE, INSTRUMENT, LOTSIZE, TICKSIZE, EXPDD, EXPMONTHYEAR, OPTTYPE, STRIKE FROM TBL_MASTER_CONTRACTS ORDER BY SYMBOL;");
-					model = new DefaultTableModel(values, col);
-					table.setModel(model);
+					int opcion = JOptionPane.showConfirmDialog(null, "Are you sure, Want to Clear ?\n It will delete all (Including formula input, trades, dashboard ,etc) ", "Reset", JOptionPane.YES_NO_OPTION);
+					if (opcion == 0)
+					{
+					String exitcode ="0";
+			        JFrame exitframe = new JFrame("Exit Check");
+			        exitcode = JOptionPane.showInputDialog(exitframe, "Enter Secret Code to Delete All #");
+			        if(exitcode.equalsIgnoreCase("7"))
+			        {
+			        	String [] batchstmts = new String[7];
+			        	batchstmts[0] = "DELETE FROM TBL_MASTER_CONTRACTS;";
+			        	batchstmts[1] = "DELETE FROM TBL_TRADE_LINE;";
+			        	batchstmts[2] = "DELETE FROM TBL_TRADE_INFO;";
+			        	batchstmts[3] = "DELETE FROM TBL_FORMULA_DATA;";
+			        	batchstmts[4] = "DELETE FROM TBL_BEAST_VIEW;";
+			        	batchstmts[5] = "ALTER TABLE TBL_TRADE_LINE ALTER COLUMN ID RESTART WITH 1;";
+			        	batchstmts[6] = "ALTER TABLE TBL_MASTER_CONTRACTS  ALTER COLUMN ID RESTART WITH 1;";
+			        	objdb.executeBatchStatement(h2con, batchstmts);
+						String [][] values = objdb.getMultiColumnRecords(h2con, "SELECT SECID, SYMBOL, EXCHANGE, INSTRUMENT, LOTSIZE, TICKSIZE, EXPDD, EXPMONTHYEAR, OPTTYPE, STRIKE FROM TBL_MASTER_CONTRACTS ORDER BY SYMBOL;");
+						model = new DefaultTableModel(values, col);
+						table.setModel(model);
+						
+			        }
+					}
 				}
 			});
 			btndeleteall.setFont(new Font("Tahoma", Font.BOLD, 12));

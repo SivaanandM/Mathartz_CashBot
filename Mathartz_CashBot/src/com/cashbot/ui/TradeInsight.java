@@ -126,7 +126,7 @@ public class TradeInsight {
 	    header.setPreferredSize(new Dimension(100, HEADER_HEIGHT));
 	    frmtradeinsight.getContentPane().setLayout(null);
 	    JScrollPane scrollPane = new JScrollPane(tblinsights);
-	    scrollPane.setBounds(10, 101, 483, 365);
+	    scrollPane.setBounds(10, 53, 483, 413);
 	    frmtradeinsight.getContentPane().add(scrollPane);
 	    scrollPane.setEnabled(false);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -149,7 +149,7 @@ public class TradeInsight {
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setForeground(Color.WHITE);
-		separator.setBounds(250, 11, 10, 65);
+		separator.setBounds(250, 11, 10, 31);
 		frmtradeinsight.getContentPane().add(separator);
 		
 		JLabel lblNewLabel = new JLabel("HEAD");
@@ -159,13 +159,6 @@ public class TradeInsight {
 		lblNewLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
 		frmtradeinsight.getContentPane().add(lblNewLabel);
 		
-		JLabel lblPL = new JLabel("P/L");
-		lblPL.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPL.setForeground(Color.WHITE);
-		lblPL.setFont(new Font("Verdana", Font.PLAIN, 18));
-		lblPL.setBounds(30, 53, 191, 18);
-		frmtradeinsight.getContentPane().add(lblPL);
-		
 		JLabel lblhead = new JLabel(headname);
 		lblhead.setHorizontalAlignment(SwingConstants.CENTER);
 		lblhead.setForeground(new Color(255, 220, 135));
@@ -173,16 +166,9 @@ public class TradeInsight {
 		lblhead.setBounds(282, 13, 191, 18);
 		frmtradeinsight.getContentPane().add(lblhead);
 		
-		JLabel lblPLvalues = new JLabel("<dynamic>");
-		lblPLvalues.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPLvalues.setForeground(new Color(255, 220, 135));
-		lblPLvalues.setFont(new Font("Verdana", Font.PLAIN, 14));
-		lblPLvalues.setBounds(282, 55, 191, 18);
-		frmtradeinsight.getContentPane().add(lblPLvalues);
-		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setForeground(Color.WHITE);
-		separator_1.setBounds(20, 38, 473, 9);
+		separator_1.setBounds(20, 40, 473, 16);
 		frmtradeinsight.getContentPane().add(separator_1);
 
 	}

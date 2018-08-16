@@ -28,6 +28,7 @@ public class ScriptManager {
 	private String operation;
 	private int seedid;
 	DbFuncs dbobj;
+	private JButton btnSave;
 	Connection h2con=null;
 
 	/**
@@ -97,6 +98,7 @@ public class ScriptManager {
 		txtsymbol.setCaretColor(Color.WHITE);
 		txtsymbol.setBackground(new Color(36, 34, 29));
 		txtsymbol.setBounds(146, 13, 156, 42);
+		
 		txtsymbol.addKeyListener(new KeyAdapter() {
 
 			  public void keyTyped(KeyEvent e) {
@@ -105,11 +107,19 @@ public class ScriptManager {
 			      e.setKeyChar(Character.toUpperCase(keyChar));
 			    }
 			  }
+			  public void keyPressed(KeyEvent key)
+		      {
+
+		      		if(key.getKeyChar() == KeyEvent.VK_ENTER)
+
+		      			btnSave.doClick();
+
+		      }
 
 			});
 		innerpanel.add(txtsymbol);
 		
-		JButton btnSave = new JButton("SAVE");
+		btnSave = new JButton("SAVE");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
