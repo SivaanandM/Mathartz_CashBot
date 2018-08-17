@@ -89,20 +89,20 @@ public class TradeInsight {
 		frmtradeinsight.setTitle("Trade Insight - "+fname);
 		frmtradeinsight.setBounds(100, 100, 519, 515);
 		frmtradeinsight.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmtradeinsight.getContentPane().setBackground(new Color(51,51,51));
+		frmtradeinsight.getContentPane().setBackground(Color.BLACK);
 		frmtradeinsight.setVisible(true);
 		
 		tblinsights = new JTable();
 		tblinsights.setBounds(10, 559, 923, -345);
-		tblinsights.setBackground(new Color(51, 51, 51));
+		tblinsights.setBackground(Color.BLACK);
 		tblinsights.setFillsViewportHeight(true);
-		tblinsights.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		tblinsights.setFont(new Font("Ebrima", Font.PLAIN, 15));
 		modelinsights = new TradeinfoTableModel(tf);
 		tblinsights = new JTable(modelinsights){
 		    public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
 		        Component returnComp = super.prepareRenderer(renderer, row, column);
-		        Color alternateColor = new Color(58,54,51);
-		        Color whiteColor = new Color(79,75,72);
+		        Color alternateColor = Color.BLACK;
+		        Color whiteColor = new Color(33,33,33);
 		        if (!returnComp.getBackground().equals(getSelectionBackground())){
 		            Color bg = (row % 2 == 0 ? alternateColor : whiteColor);
 		            returnComp .setBackground(bg);
@@ -120,9 +120,9 @@ public class TradeInsight {
 		tblinsights.setRowHeight(20);
 		
 		JTableHeader header = tblinsights.getTableHeader();
-		header.setForeground(new Color(255, 220, 135));
-		header.setBackground(new Color(51, 51, 51));
-	    header.setFont(new Font("Tahoma", Font.BOLD, 14));
+		header.setForeground(Color.WHITE);
+		header.setBackground(Color.BLACK);
+	    header.setFont(new Font("Ebrima", Font.BOLD, 12));
 	    header.setPreferredSize(new Dimension(100, HEADER_HEIGHT));
 	    frmtradeinsight.getContentPane().setLayout(null);
 	    JScrollPane scrollPane = new JScrollPane(tblinsights);
@@ -132,7 +132,7 @@ public class TradeInsight {
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportBorder(null);
 		scrollPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		scrollPane.getViewport().setBackground(new Color(51, 51, 51));
+		scrollPane.getViewport().setBackground(Color.BLACK);
 		TableColumnModel tcm = tblinsights.getColumnModel();
 		tcm.removeColumn( tcm.getColumn(0) );
 		tcm.removeColumn( tcm.getColumn(0) );
@@ -152,17 +152,17 @@ public class TradeInsight {
 		separator.setBounds(250, 11, 10, 31);
 		frmtradeinsight.getContentPane().add(separator);
 		
-		JLabel lblNewLabel = new JLabel("HEAD");
+		JLabel lblNewLabel = new JLabel("Script");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(30, 11, 191, 18);
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+		lblNewLabel.setFont(new Font("Ebrima", Font.PLAIN, 16));
 		frmtradeinsight.getContentPane().add(lblNewLabel);
 		
 		JLabel lblhead = new JLabel(headname);
 		lblhead.setHorizontalAlignment(SwingConstants.CENTER);
 		lblhead.setForeground(new Color(255, 220, 135));
-		lblhead.setFont(new Font("Verdana", Font.PLAIN, 14));
+		lblhead.setFont(new Font("Ebrima", Font.PLAIN, 16));
 		lblhead.setBounds(282, 13, 191, 18);
 		frmtradeinsight.getContentPane().add(lblhead);
 		

@@ -74,29 +74,29 @@ public class ScriptManager {
 		frmcrawler.setBounds(100, 100, 375, 213);
 		frmcrawler.getContentPane().setLayout(null);
 		frmcrawler.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmcrawler.getContentPane().setBackground(new Color(51, 51, 51));
+		frmcrawler.getContentPane().setBackground(Color.BLACK);
 		frmcrawler.setVisible(true);
 		
 		JPanel innerpanel = new JPanel();
 		innerpanel.setBounds(10, 41, 338, 123);
-		innerpanel.setBackground(new Color(80,75,78));
+		innerpanel.setBackground(new Color(33,33,33));
 		frmcrawler.getContentPane().add(innerpanel);
 		innerpanel.setLayout(null);
 		
 		JLabel lblSymbol = new JLabel("SYMBOL");
 		lblSymbol.setHorizontalAlignment(SwingConstants.LEFT);
 		lblSymbol.setForeground(Color.WHITE);
-		lblSymbol.setFont(new Font("Verdana", Font.PLAIN, 16));
+		lblSymbol.setFont(new Font("Ebrima", Font.PLAIN, 16));
 		lblSymbol.setBounds(54, 11, 82, 49);
 		innerpanel.add(lblSymbol);
 		
 		txtsymbol = new JTextField("");
 		txtsymbol.setHorizontalAlignment(SwingConstants.CENTER);
 		txtsymbol.setForeground(new Color(255, 220, 135));
-		txtsymbol.setFont(new Font("Verdana", Font.PLAIN, 20));
+		txtsymbol.setFont(new Font("Ebrima", Font.PLAIN, 20));
 		txtsymbol.setColumns(10);
 		txtsymbol.setCaretColor(Color.WHITE);
-		txtsymbol.setBackground(new Color(36, 34, 29));
+		txtsymbol.setBackground(Color.BLACK);
 		txtsymbol.setBounds(146, 13, 156, 42);
 		
 		txtsymbol.addKeyListener(new KeyAdapter() {
@@ -120,6 +120,7 @@ public class ScriptManager {
 		innerpanel.add(txtsymbol);
 		
 		btnSave = new JButton("SAVE");
+		btnSave.setFont(new Font("Ebrima", Font.PLAIN, 12));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -140,7 +141,7 @@ public class ScriptManager {
 		JLabel lblcaption = new JLabel("SCRIPT MANAGER");
 		lblcaption.setHorizontalAlignment(SwingConstants.CENTER);
 		lblcaption.setForeground(new Color(255, 220, 135));
-		lblcaption.setFont(new Font("Verdana", Font.BOLD, 18));
+		lblcaption.setFont(new Font("Ebrima", Font.PLAIN, 18));
 		lblcaption.setBounds(-1, 0, 360, 43);
 		frmcrawler.getContentPane().add(lblcaption);
 		

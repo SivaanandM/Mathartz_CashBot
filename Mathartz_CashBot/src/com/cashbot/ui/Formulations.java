@@ -26,6 +26,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.UIManager;
 
 
 public class Formulations {
@@ -131,7 +132,7 @@ public class Formulations {
 		// Formula Pane Format
 		InputHandler keyhand = new InputHandler();
 		frmformula = new JFrame("Formula Inputs - "+ Fname);
-		frmformula.getContentPane().setBackground(new Color(51, 51, 51));
+		frmformula.getContentPane().setBackground(Color.BLACK);
 		frmformula.setVisible(true);
 		frmformula.setBounds(100, 100, 305, 612);
 		frmformula.setBackground(new Color(36,34,29));
@@ -143,66 +144,66 @@ public class Formulations {
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setForeground(Color.WHITE);
-		panel.setBackground(new Color(80, 75, 78));
+		panel.setBackground(new Color(33,33,33));
 		panel.setBounds(10, 43, 279, 531);
 		frmformula.getContentPane().add(panel);
 		
 		JLabel lblX = new JLabel("X");
 		lblX.setHorizontalAlignment(SwingConstants.LEFT);
 		lblX.setForeground(Color.WHITE);
-		lblX.setFont(new Font("Verdana", Font.PLAIN, 18));
+		lblX.setFont(new Font("Ebrima", Font.PLAIN, 19));
 		lblX.setBounds(118, 6, 50, 49);
 		panel.add(lblX);
 		
 		JLabel lblY = new JLabel("Y");
 		lblY.setHorizontalAlignment(SwingConstants.LEFT);
 		lblY.setForeground(Color.WHITE);
-		lblY.setFont(new Font("Verdana", Font.PLAIN, 18));
+		lblY.setFont(new Font("Ebrima", Font.PLAIN, 19));
 		lblY.setBounds(120, 56, 65, 49);
 		panel.add(lblY);
 		
 		JLabel lblSt = new JLabel("ST");
 		lblSt.setHorizontalAlignment(SwingConstants.LEFT);
 		lblSt.setForeground(Color.WHITE);
-		lblSt.setFont(new Font("Verdana", Font.PLAIN, 18));
+		lblSt.setFont(new Font("Ebrima", Font.PLAIN, 19));
 		lblSt.setBounds(104, 109, 39, 49);
 		panel.add(lblSt);
 		
 		JLabel lblMt = new JLabel("MT");
 		lblMt.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMt.setForeground(Color.WHITE);
-		lblMt.setFont(new Font("Verdana", Font.PLAIN, 18));
+		lblMt.setFont(new Font("Ebrima", Font.PLAIN, 19));
 		lblMt.setBounds(104, 157, 64, 45);
 		panel.add(lblMt);
 		
 		JLabel lblEt = new JLabel("ET");
 		lblEt.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEt.setForeground(Color.WHITE);
-		lblEt.setFont(new Font("Verdana", Font.PLAIN, 18));
+		lblEt.setFont(new Font("Ebrima", Font.PLAIN, 19));
 		lblEt.setBounds(104, 206, 81, 49);
 		panel.add(lblEt);
 		
 		JLabel lblLossCnt = new JLabel("LCOUNT");
 		lblLossCnt.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLossCnt.setForeground(Color.WHITE);
-		lblLossCnt.setFont(new Font("Verdana", Font.PLAIN, 18));
+		lblLossCnt.setFont(new Font("Ebrima", Font.PLAIN, 19));
 		lblLossCnt.setBounds(52, 257, 129, 49);
 		panel.add(lblLossCnt);
 		
 		JLabel lblRound = new JLabel("ROUND");
 		lblRound.setHorizontalAlignment(SwingConstants.LEFT);
 		lblRound.setForeground(Color.WHITE);
-		lblRound.setFont(new Font("Verdana", Font.PLAIN, 18));
+		lblRound.setFont(new Font("Ebrima", Font.PLAIN, 19));
 		lblRound.setBounds(62, 312, 129, 49);
 		panel.add(lblRound);
 		
 		txtx = new JTextField();
 		txtx.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtx.setForeground(new Color(255, 220, 135));
+		txtx.setForeground(new Color(250,229,165));
 		txtx.setFont(new Font("Verdana", Font.PLAIN, 20));
 		txtx.setColumns(10);
 		txtx.setCaretColor(Color.WHITE);
-		txtx.setBackground(new Color(36, 34, 29));
+		txtx.setBackground(Color.BLACK);
 		txtx.setBounds(143, 10, 81, 41);
 		txtx.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -218,11 +219,11 @@ public class Formulations {
 		
 		txty = new JTextField();
 		txty.setHorizontalAlignment(SwingConstants.RIGHT);
-		txty.setForeground(new Color(255, 220, 135));
+		txty.setForeground(new Color(250,229,165));
 		txty.setFont(new Font("Verdana", Font.PLAIN, 20));
 		txty.setColumns(10);
 		txty.setCaretColor(Color.WHITE);
-		txty.setBackground(new Color(36, 34, 29));
+		txty.setBackground(Color.BLACK);
 		txty.setBounds(143, 61, 81, 39);
 		txty.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -238,11 +239,11 @@ public class Formulations {
 		
 		txtsthh = new JTextField();
 		txtsthh.setHorizontalAlignment(SwingConstants.CENTER);
-		txtsthh.setForeground(new Color(255, 220, 135));
+		txtsthh.setForeground(new Color(250,229,165));
 		txtsthh.setFont(new Font("Verdana", Font.PLAIN, 20));
 		txtsthh.setColumns(10);
 		txtsthh.setCaretColor(Color.WHITE);
-		txtsthh.setBackground(new Color(36, 34, 29));
+		txtsthh.setBackground(Color.BLACK);
 		txtsthh.setBounds(143, 109, 48, 42);
 		txtsthh.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -259,11 +260,11 @@ public class Formulations {
 		txtmthh = new JTextField();
 		txtmthh.setText("15");
 		txtmthh.setHorizontalAlignment(SwingConstants.CENTER);
-		txtmthh.setForeground(new Color(255, 220, 135));
+		txtmthh.setForeground(new Color(250,229,165));
 		txtmthh.setFont(new Font("Verdana", Font.PLAIN, 20));
 		txtmthh.setColumns(10);
 		txtmthh.setCaretColor(Color.WHITE);
-		txtmthh.setBackground(new Color(36, 34, 29));
+		txtmthh.setBackground(Color.BLACK);
 		txtmthh.setBounds(143, 158, 48, 42);
 		txtmthh.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -280,11 +281,11 @@ public class Formulations {
 		txtethh = new JTextField();
 		txtethh.setText("15");
 		txtethh.setHorizontalAlignment(SwingConstants.CENTER);
-		txtethh.setForeground(new Color(255, 220, 135));
+		txtethh.setForeground(new Color(250,229,165));
 		txtethh.setFont(new Font("Verdana", Font.PLAIN, 20));
 		txtethh.setColumns(10);
 		txtethh.setCaretColor(Color.WHITE);
-		txtethh.setBackground(new Color(36, 34, 29));
+		txtethh.setBackground(Color.BLACK);
 		txtethh.setBounds(143, 209, 48, 42);
 		txtethh.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -306,11 +307,11 @@ public class Formulations {
 		
 		txtstmm = new JTextField();
 		txtstmm.setHorizontalAlignment(SwingConstants.CENTER);
-		txtstmm.setForeground(new Color(255, 220, 135));
+		txtstmm.setForeground(new Color(250,229,165));
 		txtstmm.setFont(new Font("Verdana", Font.PLAIN, 20));
 		txtstmm.setColumns(10);
 		txtstmm.setCaretColor(Color.WHITE);
-		txtstmm.setBackground(new Color(36, 34, 29));
+		txtstmm.setBackground(Color.BLACK);
 		txtstmm.setBounds(199, 109, 48, 42);
 		txtstmm.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -333,11 +334,11 @@ public class Formulations {
 		txtmtmm = new JTextField();
 		txtmtmm.setText("00");
 		txtmtmm.setHorizontalAlignment(SwingConstants.CENTER);
-		txtmtmm.setForeground(new Color(255, 220, 135));
+		txtmtmm.setForeground(new Color(250,229,165));
 		txtmtmm.setFont(new Font("Verdana", Font.PLAIN, 20));
 		txtmtmm.setColumns(10);
 		txtmtmm.setCaretColor(Color.WHITE);
-		txtmtmm.setBackground(new Color(36, 34, 29));
+		txtmtmm.setBackground(Color.BLACK);
 		txtmtmm.setBounds(199, 158, 48, 42);
 		txtmtmm.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -360,11 +361,11 @@ public class Formulations {
 		txtetmm = new JTextField();
 		txtetmm.setText("18");
 		txtetmm.setHorizontalAlignment(SwingConstants.CENTER);
-		txtetmm.setForeground(new Color(255, 220, 135));
+		txtetmm.setForeground(new Color(250,229,165));
 		txtetmm.setFont(new Font("Verdana", Font.PLAIN, 20));
 		txtetmm.setColumns(10);
 		txtetmm.setCaretColor(Color.WHITE);
-		txtetmm.setBackground(new Color(36, 34, 29));
+		txtetmm.setBackground(Color.BLACK);
 		txtetmm.setBounds(201, 209, 48, 42);
 		txtetmm.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -381,11 +382,11 @@ public class Formulations {
 		txtlcount = new JTextField();
 		txtlcount.setText("2");
 		txtlcount.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtlcount.setForeground(new Color(255, 220, 135));
+		txtlcount.setForeground(new Color(250,229,165));
 		txtlcount.setFont(new Font("Verdana", Font.PLAIN, 20));
 		txtlcount.setColumns(10);
 		txtlcount.setCaretColor(Color.WHITE);
-		txtlcount.setBackground(new Color(36, 34, 29));
+		txtlcount.setBackground(Color.BLACK);
 		txtlcount.setBounds(143, 257, 104, 49);
 		txtlcount.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -402,11 +403,11 @@ public class Formulations {
 		txtround = new JTextField();
 		txtround.setText("3");
 		txtround.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtround.setForeground(new Color(255, 220, 135));
+		txtround.setForeground(new Color(250,229,165));
 		txtround.setFont(new Font("Verdana", Font.PLAIN, 20));
 		txtround.setColumns(10);
 		txtround.setCaretColor(Color.WHITE);
-		txtround.setBackground(new Color(36, 34, 29));
+		txtround.setBackground(Color.BLACK);
 		txtround.setBounds(143, 312, 104, 49);
 		txtround.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -435,6 +436,7 @@ public class Formulations {
 		panel.add(label_18);
 		
 		btnsave = new JButton("SAVE");
+		btnsave.setFont(new Font("Ebrima", Font.PLAIN, 14));
 		btnsave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -482,8 +484,8 @@ public class Formulations {
 		
 		JLabel lblTradeSwitch = new JLabel("Trade");
 		lblTradeSwitch.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTradeSwitch.setForeground(new Color(255, 220, 135));
-		lblTradeSwitch.setFont(new Font("Verdana", Font.PLAIN, 22));
+		lblTradeSwitch.setForeground(new Color(250,229,165));
+		lblTradeSwitch.setFont(new Font("Ebrima", Font.BOLD, 22));
 		lblTradeSwitch.setBounds(37, 11, 90, 28);
 		panel_1.add(lblTradeSwitch);
 		
@@ -497,7 +499,7 @@ public class Formulations {
 		
 		chckbxTradeSwitch = new JCheckBox("");
 		chckbxTradeSwitch.setBackground(new Color(51,51,51));
-		chckbxTradeSwitch.setForeground(new Color(255, 220, 135));
+		chckbxTradeSwitch.setForeground(new Color(250,229,165));
 		chckbxTradeSwitch.setFont(new Font("Verdana", Font.PLAIN, 22));
 		chckbxTradeSwitch.setBounds(133, 11, 21, 32);
 		panel_1.add(chckbxTradeSwitch);
@@ -529,18 +531,18 @@ public class Formulations {
 		JLabel lblQty = new JLabel("QTY");
 		lblQty.setHorizontalAlignment(SwingConstants.LEFT);
 		lblQty.setForeground(Color.WHITE);
-		lblQty.setFont(new Font("Verdana", Font.PLAIN, 18));
+		lblQty.setFont(new Font("Ebrima", Font.PLAIN, 19));
 		lblQty.setBounds(92, 365, 99, 42);
 		panel.add(lblQty);
 		
 		txtqty = new JTextField();
 		txtqty.setText("2");
 		txtqty.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtqty.setForeground(new Color(255, 220, 135));
+		txtqty.setForeground(new Color(250,229,165));
 		txtqty.setFont(new Font("Verdana", Font.PLAIN, 20));
 		txtqty.setColumns(10);
 		txtqty.setCaretColor(Color.WHITE);
-		txtqty.setBackground(new Color(36, 34, 29));
+		txtqty.setBackground(Color.BLACK);
 		txtqty.setBounds(143, 366, 104, 41);
 		txtqty.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -556,12 +558,13 @@ public class Formulations {
 		
 		JLabel lblheadname = new JLabel(HeadName);
 		lblheadname.setHorizontalAlignment(SwingConstants.CENTER);
-		lblheadname.setForeground(new Color(255, 220, 135));
-		lblheadname.setFont(new Font("Verdana", Font.PLAIN, 16));
+		lblheadname.setForeground(new Color(250,229,165));
+		lblheadname.setFont(new Font("Ebrima", Font.PLAIN, 18));
 		lblheadname.setBounds(0, 0, 299, 37);
 		frmformula.getContentPane().add(lblheadname);
 		
 		btndelete = new JButton("X");
+		btndelete.setBackground(UIManager.getColor("Button.background"));
 		btndelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				objdb.executeNonQuery(h2con, "DELETE FROM TBL_FORMULA_DATA WHERE FNAME='"+Fname+"' and ID="+Identity+"; ");
@@ -571,7 +574,7 @@ public class Formulations {
 		btndelete.setVisible(false);
 		btndelete.setBounds(0, 0, 45, 21);
 		frmformula.getContentPane().add(btndelete);
-		btndelete.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btndelete.setFont(new Font("Ebrima", Font.PLAIN, 10));
 		frmformula.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmformula.addKeyListener(keyhand);
 		

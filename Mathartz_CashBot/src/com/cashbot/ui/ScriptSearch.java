@@ -130,7 +130,7 @@ public class ScriptSearch {
 			frmScriptSearch = new JFrame();
 			frmScriptSearch.setVisible(true);
 			frmScriptSearch.setTitle("Presto Contract Search");
-			frmScriptSearch.getContentPane().setBackground(new Color(51,51,51));
+			frmScriptSearch.getContentPane().setBackground(Color.BLACK);
 			frmScriptSearch.getContentPane().setLayout(new BorderLayout(0, 0));
 			frmScriptSearch.setBounds(100, 100, 945, 629);
 			frmScriptSearch.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -139,35 +139,35 @@ public class ScriptSearch {
 			JLabel lblScriptsCrawler = new JLabel("SEC-ID STORAGE");
 			lblScriptsCrawler.setHorizontalAlignment(SwingConstants.CENTER);
 			lblScriptsCrawler.setForeground(new Color(255, 220, 135));
-			lblScriptsCrawler.setFont(new Font("Verdana", Font.PLAIN, 24));
+			lblScriptsCrawler.setFont(new Font("Ebrima", Font.PLAIN, 20));
 			frmScriptSearch.getContentPane().add(lblScriptsCrawler, BorderLayout.NORTH);
 			
 			JPanel pnlmiddle = new JPanel();
 			frmScriptSearch.getContentPane().add(pnlmiddle, BorderLayout.CENTER);
 			pnlmiddle.setLayout(null);
-			pnlmiddle.setBackground(new Color(51,51,51));
+			pnlmiddle.setBackground(Color.BLACK);
 			
 			JPanel pnlsearchcontrol = new JPanel();
 			pnlsearchcontrol.setBounds(183, 11, 601, 71);
-			pnlsearchcontrol.setBackground(new Color(80,75,78));
+			pnlsearchcontrol.setBackground(new Color(33,33,33));
 			pnlmiddle.add(pnlsearchcontrol);
 			pnlsearchcontrol.setLayout(null);
 			
-			JLabel lblSymbol = new JLabel("Symbol");
-			lblSymbol.setBounds(52, 11, 82, 49);
+			JLabel lblSymbol = new JLabel("SYMBOL");
+			lblSymbol.setBounds(38, 10, 82, 49);
 			lblSymbol.setHorizontalAlignment(SwingConstants.LEFT);
 			lblSymbol.setForeground(Color.WHITE);
-			lblSymbol.setFont(new Font("Verdana", Font.PLAIN, 14));
+			lblSymbol.setFont(new Font("Ebrima", Font.PLAIN, 16));
 			pnlsearchcontrol.add(lblSymbol);
 			
 			textSymbol = new JTextField();
-			textSymbol.setBounds(116, 16, 171, 35);
+			textSymbol.setBounds(116, 16, 236, 35);
 			textSymbol.setHorizontalAlignment(SwingConstants.LEFT);
 			textSymbol.setForeground(new Color(255, 220, 135));
-			textSymbol.setFont(new Font("Verdana", Font.PLAIN, 20));
+			textSymbol.setFont(new Font("Ebrima", Font.PLAIN, 20));
 			textSymbol.setColumns(10);
 			textSymbol.setCaretColor(Color.WHITE);
-			textSymbol.setBackground(new Color(36, 34, 29));
+			textSymbol.setBackground(Color.BLACK);
 			textSymbol.addKeyListener(new KeyAdapter() {
 
 				  public void keyTyped(KeyEvent e) {
@@ -191,7 +191,7 @@ public class ScriptSearch {
 			String formattedDate = df.format(Calendar.getInstance().getTime());
 			
 			btnGetScriptList = new JButton("Add");
-			btnGetScriptList.setFont(new Font("Tahoma", Font.BOLD, 12));
+			btnGetScriptList.setFont(new Font("Ebrima", Font.BOLD, 12));
 			btnGetScriptList.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
@@ -216,22 +216,25 @@ public class ScriptSearch {
 					}
 				}
 			});
-			btnGetScriptList.setBounds(311, 16, 235, 35);
+			btnGetScriptList.setBounds(362, 16, 184, 35);
 			pnlsearchcontrol.add(btnGetScriptList);
 			
 			
 			table = new JTable();
 			table.setBounds(10, 559, 923, -345);
-			table.setBackground(new Color(51, 51, 51));
+			table.setBackground(Color.BLACK);
 			table.setFillsViewportHeight(true);
-			table.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			table.setFont(new Font("Ebrima", Font.PLAIN, 14));
 			table.setRowHeight(23);
+			table.setShowGrid(true);
+			table.setShowHorizontalLines(false);
+			table.setShowVerticalLines(true);
 			model = new DefaultTableModel(col,0);
 			table = new JTable(model){
 			    public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
 			        Component returnComp = super.prepareRenderer(renderer, row, column);
-			        Color alternateColor = new Color(58,54,51);
-			        Color whiteColor = new Color(79,75,72);
+			        Color alternateColor = Color.BLACK;
+			        Color whiteColor = new Color(33,33,33);
 			        if (!returnComp.getBackground().equals(getSelectionBackground())){
 			            Color bg = (row % 2 == 0 ? alternateColor : whiteColor);
 			            returnComp .setBackground(bg);
@@ -264,9 +267,9 @@ public class ScriptSearch {
 			});
 			
 			JTableHeader header = table.getTableHeader();
-			header.setForeground(new Color(255, 220, 135));
-			header.setBackground(new Color(51, 51, 51));
-		    header.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			header.setForeground(Color.WHITE);
+			header.setBackground(Color.BLACK);
+		    header.setFont(new Font("Ebrima", Font.PLAIN, 12));
 		    header.setPreferredSize(new Dimension(100, HEADER_HEIGHT));
 		    JScrollPane scrollPane = new JScrollPane(table);
 		    scrollPane.setBounds(22, 109, 897, 410);
@@ -274,7 +277,7 @@ public class ScriptSearch {
 		    scrollPane.setEnabled(false);
 			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 			scrollPane.setViewportBorder(null);
-			scrollPane.getViewport().setBackground(new Color(51, 51, 51));
+			scrollPane.getViewport().setBackground(Color.BLACK);
 			
 			
 			JSeparator separator = new JSeparator();
@@ -314,7 +317,7 @@ public class ScriptSearch {
 					}
 				}
 			});
-			btndeleteall.setFont(new Font("Tahoma", Font.BOLD, 12));
+			btndeleteall.setFont(new Font("Ebrima", Font.BOLD, 12));
 			btndeleteall.setBounds(370, 530, 240, 35);
 			pnlmiddle.add(btndeleteall);
 			

@@ -70,10 +70,10 @@ public class FormulaAmazeF4 {
 			fvalue.SetAmazevalues(c, lc, r, points, low, high, nextline, baseline, way,tpl);
 			finput.setIsend(isend);
 			bv = listcom.getBeastViewListByID(identity,CommonObjects.GlobalBeastViewList);
-			bv.setF1Point(points);
+			bv.setF4Point(points);
 			if ((way.equalsIgnoreCase("L3"))||(way.equalsIgnoreCase("L2"))||(way.equalsIgnoreCase("R3"))||(way.equalsIgnoreCase("R2")))
 			{
-				bv.setF1PL(tpl);
+				bv.setF4PL(tpl);
 			}
 			
 		}
@@ -583,7 +583,7 @@ public class FormulaAmazeF4 {
 		String clientid = null;
 		try
 		{
-			System.out.println("Condition PASS : "+String.valueOf(id) + "; FORMULA : F1");
+			System.out.println("Condition PASS : "+String.valueOf(id) + "; FORMULA : F4");
 			if (tradeswitch == true)
 			{
 				SquadScripts pl= listcom.getSquadScriptsByID(id, CommonObjects.GlobalSquadScript);

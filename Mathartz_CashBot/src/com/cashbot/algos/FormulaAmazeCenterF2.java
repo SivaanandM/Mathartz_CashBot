@@ -71,10 +71,10 @@ public class FormulaAmazeCenterF2 {
 			fvalue.SetAmazeCentervalues(c, lc, r, points, low, high, nextline, baseline, way,tpl,spoint);
 			finput.setIsend(isend);
 			bv = listcom.getBeastViewListByID(identity,CommonObjects.GlobalBeastViewList);
-			bv.setF1Point(points);
+			bv.setF2Point(points);
 			if ((way.equalsIgnoreCase("L3"))||(way.equalsIgnoreCase("L2"))||(way.equalsIgnoreCase("R3"))||(way.equalsIgnoreCase("R2")))
 			{
-				bv.setF1PL(tpl);
+				bv.setF2PL(tpl);
 			}
 			
 		}
@@ -206,7 +206,7 @@ public class FormulaAmazeCenterF2 {
 				spoint = (low + (low*((x/2)/100)));
 				way = "L0";
 			}
-			else if (ltp > (high - (high*(x/100))))
+			else if (ltp < (high - (high*(x/100))))
 			{
 				spoint = (high - (high*((x/2)/100)));
 				way = "R0";
@@ -609,7 +609,7 @@ public class FormulaAmazeCenterF2 {
 		String clientid = null;
 		try
 		{
-			System.out.println("Condition PASS : "+String.valueOf(id) + "; FORMULA : F1");
+			System.out.println("Condition PASS : "+String.valueOf(id) + "; FORMULA : F2");
 			if (tradeswitch == true)
 			{
 				SquadScripts pl= listcom.getSquadScriptsByID(id, CommonObjects.GlobalSquadScript);

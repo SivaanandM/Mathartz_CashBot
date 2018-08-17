@@ -1,11 +1,14 @@
 package com.cashbot.collection;
 
+import java.text.DecimalFormat;
+
 public class BeastViewList 
 {
   int id;
   String headdisplay;
   double F1Point, F2Point, F3Point, F4Point, F5Point, F6Point;
   double F1PL, F2PL, F3PL, F4PL, F5PL, F6PL;
+  DecimalFormat f = new DecimalFormat("##.00");
   
   public BeastViewList(int id, String headdisplay, double F1Point, double F1PL, double F2Point, double F2PL, 
 		  double F3Point, double F3PL, double F4Point , double F4PL,double F5Point,double F5PL,double F6Point ,double F6PL)		  
@@ -18,12 +21,12 @@ public class BeastViewList
 	  this.F4Point = F4Point;
 	  this.F5Point = F5Point;
 	  this.F6Point = F6Point;
-	  this.F1PL = F1PL;
-	  this.F2PL = F2PL;
-	  this.F3PL = F3PL;
-	  this.F4PL = F4PL;
-	  this.F5PL = F5PL;
-	  this.F6PL = F6PL;
+	  this.F1PL = Double.valueOf(f.format(F1PL));
+	  this.F2PL = Double.valueOf(f.format(F2PL));
+	  this.F3PL = Double.valueOf(f.format(F3PL));
+	  this.F4PL = Double.valueOf(f.format(F4PL));
+	  this.F5PL = Double.valueOf(f.format(F5PL));
+	  this.F6PL = Double.valueOf(f.format(F6PL));
   }
  
   public int getid()
@@ -110,27 +113,27 @@ public class BeastViewList
   
   public void setF1PL(double f1pl)
   {
-		this.F1PL = f1pl;
+		this.F1PL = Double.valueOf(f.format(f1pl));
   }
   public void setF2PL(double f2pl)
   {
-		this.F2PL = f2pl;
+		this.F2PL = Double.valueOf(f.format(f2pl));
   }
   public void setF3PL(double f3pl)
   {
-		this.F3PL = f3pl;
+		this.F3PL = Double.valueOf(f.format(f3pl));
   }
   public void setF4PL(double f4pl)
   {
-		this.F4PL = f4pl;
+		this.F4PL = Double.valueOf(f.format(f4pl));
   }
   public void setF5PL(double f5pl)
   {
-		this.F5PL = f5pl;
+		this.F5PL = Double.valueOf(f.format(f5pl));
   }
   public void setF6PL(double f6pl)
   {
-		this.F6PL = f6pl;
+		this.F6PL = Double.valueOf(f.format(f6pl));
   }
   
   public String[] getData()

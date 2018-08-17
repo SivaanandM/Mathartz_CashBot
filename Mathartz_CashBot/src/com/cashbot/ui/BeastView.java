@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,13 +71,14 @@ public class BeastView implements KeyListener{
     double height = screenSize.getHeight();
     DbFuncs dbobj;
     private JScrollPane scrollPane; 
+    
     private JTable maintable, totaltable;
     private JPanel pnlmiddle;
     TableModel mainmodel;
     String col[]= {"ID","SCRIPT","F1 Point","F1 PL","F2 Point","F2 PL","F3 Point","F3 PL",
     		"F4 Point","F4 PL","F5 Point","F5 PL","F6 Point","F6 PL"};
     List<BeastViewList> ViewList ;
-    private static int HEADER_HEIGHT = 32;
+    private static int HEADER_HEIGHT = 25;
     private String configprop=System.getProperty("user.dir")+File.separator+"conf"+File.separator+"feed.properties";
     TableColumnModel columnModel,columnModeltotal;
     DefaultTableModel totmodel;
@@ -179,7 +181,14 @@ public class BeastView implements KeyListener{
 		columnModeltotal.getColumn(9).setPreferredWidth(100);
 		columnModeltotal.getColumn(10).setPreferredWidth(100);
 		columnModeltotal.getColumn(11).setPreferredWidth(100);
-		columnModeltotal.getColumn(12).setPreferredWidth(117);
+		if (scrollPane.getVerticalScrollBar().isVisible() == false)
+		{
+			columnModeltotal.getColumn(12).setPreferredWidth(100);
+		}
+		else
+		{
+			columnModeltotal.getColumn(12).setPreferredWidth(117);
+		}
 		totaltable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 		
 		renderertotal = new DefaultTableCellRenderer();
@@ -225,25 +234,19 @@ public class BeastView implements KeyListener{
 		});
 		
 		JPanel pnlhead = new JPanel();
-		pnlhead.setBackground(new Color(51, 51, 51));
+		pnlhead.setBackground(Color.BLACK);
 		frmBeastview.getContentPane().add(pnlhead, BorderLayout.NORTH);
 		pnlhead.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-//		JLabel lblhead = new JLabel(strtitle);
-//		
-//		lblhead.setHorizontalAlignment(SwingConstants.CENTER);		
-//		lblhead.setFont(new Font("Verdana", Font.PLAIN, 24));
-//		lblhead.setForeground(new Color(240,159,108));
-//		pnlhead.add(lblhead);
+
 		
 		JPanel pnldown = new JPanel();
-		pnldown.setBackground(new Color(51, 51, 51));
+		pnldown.setBackground(Color.BLACK);
 		pnldown.setPreferredSize(new Dimension((int) width, 60));
 		pnldown.setLayout(new BorderLayout());
 		frmBeastview.getContentPane().add(pnldown, BorderLayout.SOUTH);
 		
 		JPanel pnldowncenter = new JPanel();
-		pnldowncenter.setBackground(new Color(51, 51, 51));
+		pnldowncenter.setBackground(Color.BLACK);
 		pnldowncenter.setPreferredSize(new Dimension((((int) width) - ((int) width)/3), 60));
 		pnldown.add(pnldowncenter,BorderLayout.CENTER);
 		
@@ -372,7 +375,7 @@ public class BeastView implements KeyListener{
 				}
 				catch(Exception ex)
 				{
-					
+					System.out.println(ex.toString());
 				}
 				
 			}
@@ -387,7 +390,7 @@ public class BeastView implements KeyListener{
 		
 		pnlmiddle = new JPanel();
 		pnlmiddle.setBorder(null);
-		pnlmiddle.setBackground(new Color(51, 51, 51));
+		pnlmiddle.setBackground(Color.BLACK);
 		frmBeastview.getContentPane().add(pnlmiddle, BorderLayout.CENTER);
 		
 		
@@ -397,53 +400,51 @@ public class BeastView implements KeyListener{
 	    
 	    maintable = new JTable();
 	    maintable.setBounds(10, 559, 923, -345);
-	    maintable.setBackground(new Color(51, 51, 51));
+	    maintable.setBackground(Color.BLACK);
 	    maintable.setFillsViewportHeight(true);
-	    maintable.setFont(new Font("Tahoma", Font.BOLD, 14));
+	    maintable.setFont(new Font("Ebrima", Font.BOLD, 12));
 	    mainmodel = new BeastViewListTableModel(ViewList);
 	    
 		maintable = new JTable(mainmodel){
 		    public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
 		        Component returnComp = super.prepareRenderer(renderer, row, column);
-		        Color alternateColor = new Color(58,54,51);
-		        Color whiteColor = new Color(79,75,72);
+		        Color alternateColor = new Color(10,11,12);//(58,54,51);
+		        Color whiteColor = new Color(33,33,33);
 		        if (!returnComp.getBackground().equals(getSelectionBackground())){
 		            Color bg = (row % 2 == 0 ? alternateColor : whiteColor);
 		            returnComp .setBackground(bg);
 		            returnComp.setForeground(Color.WHITE);
 		            bg = null;
 		        }
-		        if(column ==1)
+		    
+		        if((column == 1) || (column == 0))
 		        {
-		        	returnComp.setFont(new Font("Tahoma", Font.BOLD, 14));
-		        }
-		        if(column ==0)
-		        {
-		        	returnComp.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		        	returnComp.setFont(new Font("Ebrima", Font.PLAIN, 12));
+		        	returnComp.setForeground(Color.white);
 		        }
 		        if (column > 1)
 		        {
 			        double value = Double.parseDouble(maintable.getValueAt(row, column).toString());
 			        if (value == 0)
 		        	{
-			        	returnComp.setFont(new Font("Tahoma", Font.PLAIN, 0));
+			        	returnComp.setFont(new Font("Ebrima", Font.PLAIN, 0));
 		        	}
 			        else
 			        {	if (value > 0)
 			        	{
-			        		returnComp.setForeground(new Color(255,220,135));
+			        		returnComp.setForeground(new Color(250,229,165));
 			        	}
 			        	else if (value < 0)
 			        	{
-			        		returnComp.setForeground(new Color(103,186,233));
+			        		returnComp.setForeground(new Color(145,208,242));
 			        	}
 				        if (column % 2 != 0)
 				        {
-				        	returnComp.setFont(new Font("Tahoma", Font.BOLD, 12));
+				        	returnComp.setFont(new Font("Ebrima", Font.PLAIN, 12));
 				        }
 				        else
 				        {
-				        	returnComp.setFont(new Font("Tahoma", Font.PLAIN, 12));
+				        	returnComp.setFont(new Font("Ebrima", Font.PLAIN, 12));
 				        }
 				        
 			        }
@@ -456,27 +457,31 @@ public class BeastView implements KeyListener{
 		        return false; //To change body of generated methods, choose Tools | Templates.
 		    }   
 		};
-		maintable.setBorder(null);
 		maintable.setBackground(Color.GRAY);
-		maintable.setRowHeight(25);
+		maintable.setRowHeight(20);
 		maintable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		maintable.setRowSelectionAllowed(true);
+		maintable.setShowGrid(true);
+		maintable.setIntercellSpacing(new Dimension(1, 0));
+		maintable.setShowVerticalLines(true);
+		maintable.setShowHorizontalLines(false);
+		maintable.setSelectionBackground(new Color(0,70,140));
 		
 		
 		JTableHeader header = maintable.getTableHeader();
-		header.setForeground(new Color(255, 220, 135));
-		header.setBackground(new Color(51, 51, 51));
-	    header.setFont(new Font("Tahoma", Font.BOLD, 14));
-	    header.setPreferredSize(new Dimension(100, HEADER_HEIGHT));
-	    JScrollPane scrollPane = new JScrollPane(maintable);
+		header.setForeground(Color.WHITE);
+		header.setBackground(Color.black);
+	    header.setFont(new Font("Ebrima", Font.BOLD, 14));
+	    header.setPreferredSize(new Dimension(0, HEADER_HEIGHT));
+	    scrollPane = new JScrollPane(maintable);
 	    scrollPane.setBounds(22, 185, 897, 367);
 	    pnlmiddle.add(scrollPane);
 	    scrollPane.setEnabled(false);
-	    scrollPane.getViewport().setBackground(new Color(51, 51, 51));
-	    scrollPane.setBackground(new Color(51, 51, 51));
+	    scrollPane.getViewport().setBackground(Color.BLACK);
+	    scrollPane.setBackground(Color.BLACK);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportBorder(null);
-		scrollPane.setPreferredSize(new Dimension((int)width-25, (int)height-190));
+		scrollPane.setPreferredSize(new Dimension((int)width-25, (int)height-185));
 		scrollPane.setBorder(null);
 		scrollPane.setColumnHeaderView(new JViewport() {
 		      @Override public Dimension getPreferredSize() {
@@ -486,8 +491,7 @@ public class BeastView implements KeyListener{
 		        }
 		      });
 		
-		totalvalues = dbobj.getMultiColumnRecords(h2con, "SELECT 'TOTAL', SUM(F1POINT), SUM(F1PL),  SUM(F2POINT), SUM(F2PL), SUM(F3POINT), SUM(F3PL), SUM(F4POINT), SUM(F4PL), SUM(F5POINT), SUM(F5PL), SUM(F6POINT), SUM(F6PL) FROM TBL_BEAST_VIEW;");
-		//String [][] totalvalues= {{"Total", "1","100", "-2","-200", "3","300", "4","400", "-5","-500", "2","200"}};
+		totalvalues = dbobj.getMultiColumnRecords(h2con, "SELECT 'TOTAL',  round(SUM(F1POINT),2),  round(SUM(F1PL),2),   round(SUM(F2POINT),2),  round(SUM(F2PL),2),  round(SUM(F3POINT),2),  round(SUM(F3PL),2),  round(SUM(F4POINT),2), round(SUM(F4PL),2), round( SUM(F5POINT),2),  round(SUM(F5PL),2),  round(SUM(F6POINT),2),  round(SUM(F6PL),2) FROM TBL_BEAST_VIEW;");
 		totmodel = new DefaultTableModel(totalvalues, totalhead);
 		totaltable = new JTable(totmodel) {
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
@@ -500,34 +504,40 @@ public class BeastView implements KeyListener{
 			        	double value = Double.parseDouble((String) totaltable.getValueAt(row, column));
 			        	if (value > 0)
 			        	{
-			        		returnComp.setForeground(new Color(255,220,135));
-			        		returnComp.setFont(new Font("Tahoma", Font.BOLD, 16));
+			        		returnComp.setForeground(new Color(250,229,165));
+			        		returnComp.setFont(new Font("Ebrima", Font.PLAIN, 18));
 			        	}
 			        	else if (value < 0)
 			        	{
-			        		returnComp.setForeground(new Color(103,186,233));
-			        		returnComp.setFont(new Font("Tahoma", Font.BOLD, 16));
+			        		returnComp.setForeground(new Color(145,208,242));
+			        		returnComp.setFont(new Font("Ebrima", Font.PLAIN, 18));
 			        	}
 			        	else
 			        	{
-			        		returnComp.setFont(new Font("Tahoma", Font.PLAIN, 0));
+			        		returnComp.setFont(new Font("Ebrima", Font.PLAIN, 0));
 			        	}
 		        	}
 		        }
 		        else
 		        {
 		        	returnComp.setForeground(Color.WHITE);
-		        	returnComp.setFont(new Font("Tahoma", Font.BOLD, 16));
+		        	returnComp.setFont(new Font("Ebrima", Font.BOLD, 18));
 		        }
 		        
 				return returnComp;
 			}
 		};
-		totaltable.setBorder(new LineBorder(Color.WHITE, 2, true));
+		totaltable.setFont(new Font("Ebrima", Font.PLAIN, 11));
+		totaltable.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		totaltable.setTableHeader(null);
-		totaltable.setRowHeight(35);
+		totaltable.setRowSelectionAllowed(false);
+		totaltable.setRowHeight(34);
 		totaltable.setPreferredSize(new Dimension((int)width -25, 35));
-		totaltable.setBackground(new Color(51, 51, 51));
+		totaltable.setBackground(Color.BLACK);
+		totaltable.setShowGrid(true);
+		totaltable.setShowVerticalLines(true);
+
+		
 		pnlmiddle.add(totaltable);
 		Alligntable();
 		
@@ -555,41 +565,42 @@ public class BeastView implements KeyListener{
             		            	ViewList = dbobj.getBeastViewData(h2con, "SELECT * FROM TBL_BEAST_VIEW ORDER BY ID;");
             		            	mainmodel =new  BeastViewListTableModel(ViewList);
             		            	
-            		            	totalvalues = dbobj.getMultiColumnRecords(h2con, "SELECT 'TOTAL', SUM(F1POINT), SUM(F1PL),  SUM(F2POINT), SUM(F2PL), SUM(F3POINT), SUM(F3PL), SUM(F4POINT), SUM(F4PL), SUM(F5POINT), SUM(F5PL), SUM(F6POINT), SUM(F6PL) FROM TBL_BEAST_VIEW;");
+            		            	totalvalues = dbobj.getMultiColumnRecords(h2con, "SELECT 'TOTAL',  round(SUM(F1POINT),2),  round(SUM(F1PL),2),   round(SUM(F2POINT),2),  round(SUM(F2PL),2),  round(SUM(F3POINT),2),  round(SUM(F3PL),2),  round(SUM(F4POINT),2), round(SUM(F4PL),2), round( SUM(F5POINT),2),  round(SUM(F5PL),2),  round(SUM(F6POINT),2),  round(SUM(F6PL),2) FROM TBL_BEAST_VIEW;");
             		        		totmodel = new DefaultTableModel(totalvalues, totalhead);
             		            }
             		            else
             		            {
-            		            	totalvalues=new String[][]{{"Total", "0","0", "0","0", "0","0", "0","0", "0","0", "0","0"}};
+            		            	totalvalues=new String[][]{{"Total", "0.0","0.0", "0.0","0.0", "0.0","0.0", "0.0","0.0", "0.0","0.0", "0.0","0.0"}};
             		            	mainmodel = new  BeastViewListTableModel(CommonObjects.GlobalBeastViewList);
             		            	//getting total from main model
-            		            	int temp;
+            		            	double temp;
+            		            	DecimalFormat f = new DecimalFormat("##.00");
             		            	for (int i=0 ; i < mainmodel.getRowCount() ; i++)
             		            	{
-            		            		temp =(int) mainmodel.getValueAt(i, 2);
-            		            		totalvalues[0][1] =String.valueOf(Integer.parseInt((String) totalvalues[0][1])+temp);
-            		            		temp =(int) mainmodel.getValueAt(i, 3);
-            		            		totalvalues[0][2] =String.valueOf(Integer.parseInt((String) totalvalues[0][2])+temp);
-            		            		temp =(int) mainmodel.getValueAt(i, 4);
-            		            		totalvalues[0][3] =String.valueOf(Integer.parseInt((String) totalvalues[0][3])+temp);
-            		            		temp =(int) mainmodel.getValueAt(i, 5);
-            		            		totalvalues[0][4] =String.valueOf(Integer.parseInt((String) totalvalues[0][4])+temp);
-            		            		temp =(int) mainmodel.getValueAt(i, 6);
-            		            		totalvalues[0][5] =String.valueOf(Integer.parseInt((String) totalvalues[0][5])+temp);
-            		            		temp =(int) mainmodel.getValueAt(i, 7);
-            		            		totalvalues[0][6] =String.valueOf(Integer.parseInt((String) totalvalues[0][6])+temp);
-            		            		temp =(int) mainmodel.getValueAt(i, 8);
-            		            		totalvalues[0][7] =String.valueOf(Integer.parseInt((String) totalvalues[0][7])+temp);
-            		            		temp =(int) mainmodel.getValueAt(i, 9);
-            		            		totalvalues[0][8] =String.valueOf(Integer.parseInt((String) totalvalues[0][8])+temp);
-            		            		temp =(int) mainmodel.getValueAt(i, 10);
-            		            		totalvalues[0][9] =String.valueOf(Integer.parseInt((String) totalvalues[0][9])+temp);
-            		            		temp =(int) mainmodel.getValueAt(i, 11);
-            		            		totalvalues[0][10] =String.valueOf(Integer.parseInt((String) totalvalues[0][10])+temp);
-            		            		temp =(int) mainmodel.getValueAt(i, 12);
-            		            		totalvalues[0][11] =String.valueOf(Integer.parseInt((String) totalvalues[0][11])+temp);
-            		            		temp =(int) mainmodel.getValueAt(i, 13);
-            		            		totalvalues[0][12] =String.valueOf(Integer.parseInt((String) totalvalues[0][12])+temp);
+            		            		temp =(double) mainmodel.getValueAt(i, 2);
+            		            		totalvalues[0][1] =String.valueOf(f.format(Double.valueOf((String) totalvalues[0][1])+temp));
+            		            		temp =(double) mainmodel.getValueAt(i, 3);
+            		            		totalvalues[0][2] =String.valueOf(f.format(Double.valueOf((String) totalvalues[0][2])+temp));
+            		            		temp =(double) mainmodel.getValueAt(i, 4);
+            		            		totalvalues[0][3] =String.valueOf(f.format(Double.valueOf((String) totalvalues[0][3])+temp));
+            		            		temp =(double) mainmodel.getValueAt(i, 5);
+            		            		totalvalues[0][4] =String.valueOf(f.format(Double.valueOf((String) totalvalues[0][4])+temp));
+            		            		temp =(double) mainmodel.getValueAt(i, 6);
+            		            		totalvalues[0][5] =String.valueOf(f.format(Double.valueOf((String) totalvalues[0][5])+temp));
+            		            		temp =(double) mainmodel.getValueAt(i, 7);
+            		            		totalvalues[0][6] =String.valueOf(f.format(Double.valueOf((String) totalvalues[0][6])+temp));
+            		            		temp =(double) mainmodel.getValueAt(i, 8);
+            		            		totalvalues[0][7] =String.valueOf(f.format(Double.valueOf((String) totalvalues[0][7])+temp));
+            		            		temp =(double) mainmodel.getValueAt(i, 9);
+            		            		totalvalues[0][8] =String.valueOf(f.format(Double.valueOf((String) totalvalues[0][8])+temp));
+            		            		temp =(double) mainmodel.getValueAt(i, 10);
+            		            		totalvalues[0][9] =String.valueOf(f.format(Double.valueOf((String) totalvalues[0][9])+temp));
+            		            		temp =(double) mainmodel.getValueAt(i, 11);
+            		            		totalvalues[0][10] =String.valueOf(f.format(Double.valueOf((String) totalvalues[0][10])+temp));
+            		            		temp =(double) mainmodel.getValueAt(i, 12);
+            		            		totalvalues[0][11] =String.valueOf(f.format(Double.valueOf((String) totalvalues[0][11])+temp));
+            		            		temp =(double) mainmodel.getValueAt(i, 13);
+            		            		totalvalues[0][12] =String.valueOf(f.format(Double.valueOf((String) totalvalues[0][12])+temp));
             		            	}
             		            	totmodel = new DefaultTableModel(totalvalues, totalhead);
             		            }
@@ -615,6 +626,7 @@ public class BeastView implements KeyListener{
 							    		 }
 							    	 }
 					            } 
+            		            
 							}
 							catch(Exception ex)
 							{
@@ -638,6 +650,11 @@ public class BeastView implements KeyListener{
 		maintable.addKeyListener(new KeyAdapter() {
 		      public void keyPressed(KeyEvent e) 
 		      {
+			    	  if (e.getKeyCode() == 27) 
+					  {
+			    		  //CTRL+ A
+			    		  maintable.getSelectionModel().clearSelection();
+					  }
 			    	  if (e.isControlDown() && e.getKeyCode() == 65) 
 					  {
 			    		  //CTRL+ A
