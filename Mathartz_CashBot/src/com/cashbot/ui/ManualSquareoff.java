@@ -5,10 +5,16 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -21,6 +27,7 @@ import com.cashbot.collection.TradeinfoTableModel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
 public class ManualSquareoff {
@@ -131,6 +138,16 @@ public class ManualSquareoff {
 		scrollPane.getViewport().setBackground(new Color(51, 51, 51));
 		
 		frmsquaroff.setVisible(true);
+		
+		KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
+	    Action escapeAction = new AbstractAction() {
+	      public void actionPerformed(ActionEvent e) {
+	    	  frmsquaroff.dispose();
+	      }
+	    };
+	    frmsquaroff.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+	        escapeKeyStroke, "ESCAPE");
+	    frmsquaroff.getRootPane().getActionMap().put("ESCAPE", escapeAction);
 	}
 
 }

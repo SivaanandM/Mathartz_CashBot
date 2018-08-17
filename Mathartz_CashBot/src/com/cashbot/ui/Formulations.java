@@ -21,12 +21,17 @@ import javax.swing.text.Document;
 import com.cashbot.commons.DbFuncs;
 import com.cashbot.collection.FormulaData;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 
 
 public class Formulations {
@@ -130,7 +135,6 @@ public class Formulations {
 	private void initialize() {
 		
 		// Formula Pane Format
-		InputHandler keyhand = new InputHandler();
 		frmformula = new JFrame("Formula Inputs - "+ Fname);
 		frmformula.getContentPane().setBackground(Color.BLACK);
 		frmformula.setVisible(true);
@@ -576,27 +580,19 @@ public class Formulations {
 		frmformula.getContentPane().add(btndelete);
 		btndelete.setFont(new Font("Ebrima", Font.PLAIN, 10));
 		frmformula.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmformula.addKeyListener(keyhand);
-		
-		
+		KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
+	    Action escapeAction = new AbstractAction() {
+	      public void actionPerformed(ActionEvent e) {
+	    	  frmformula.dispose();
+	      }
+	    };
+	    frmformula.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+	        escapeKeyStroke, "ESCAPE");
+	    frmformula.getRootPane().getActionMap().put("ESCAPE", escapeAction);
 	}
-	
-	// Key input handlers
-	class InputHandler implements KeyListener
-	{
-        public void keyTyped(KeyEvent e)
-        {
-        	
-        }
-        public void keyPressed(java.awt.event.KeyEvent evt)
-        {
-    		if (evt.getKeyCode() == KeyEvent.VK_ESCAPE)
-    		{
-        			frmformula.dispose();
-            }
-        }
-        public void keyReleased(KeyEvent kr)
-        {
-        }
+
+	private JComponent getRootPane() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

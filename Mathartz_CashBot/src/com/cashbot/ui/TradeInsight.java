@@ -5,13 +5,19 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
+import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -170,6 +176,16 @@ public class TradeInsight {
 		separator_1.setForeground(Color.WHITE);
 		separator_1.setBounds(20, 40, 473, 16);
 		frmtradeinsight.getContentPane().add(separator_1);
-
+		
+		KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
+	    Action escapeAction = new AbstractAction() {
+	      public void actionPerformed(ActionEvent e) {
+	    	  frmtradeinsight.dispose();
+	      }
+	    };
+	    frmtradeinsight.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+	        escapeKeyStroke, "ESCAPE");
+	    frmtradeinsight.getRootPane().getActionMap().put("ESCAPE", escapeAction);
+		
 	}
 }

@@ -744,7 +744,7 @@ public class DbFuncs {
 							 bWrite1.write("ID, SCRIPT , F1 POINT, F1 PL, F2 POINT, F2 PL, F3 POINT, F3 PL, F4 POINT, F4 PL, F5 POINT, F5 PL, F6 POINT, F6 PL ");
 							 bWrite1.newLine();
 						 }
-						 bWrite1.write(recs[i][0]+","+ recs[i][1]+","+recs[i][2]+","+recs[i][3]+","+recs[i][4]+","+recs[i][5]+","+recs[i][6]+","+recs[i][7]+","+recs[i][8]+","+recs[i][9]+","+recs[i][10]+","+recs[i][11]+","+recs[i][12]+","+recs[i][13]+","+recs[i][14]);
+						 bWrite1.write(recs[i][0]+","+ recs[i][1]+","+recs[i][2]+","+recs[i][3]+","+recs[i][4]+","+recs[i][5]+","+recs[i][6]+","+recs[i][7]+","+recs[i][8]+","+recs[i][9]+","+recs[i][10]+","+recs[i][11]+","+recs[i][12]+","+recs[i][13]);
 						 bWrite1.newLine();
 					 }
 				 }

@@ -16,10 +16,16 @@ import java.util.List;
 
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+
 import com.cashbot.commons.CommonObjects;
 import com.cashbot.commons.DbFuncs;
 import com.cashbot.collection.Scriptsdetail;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 
 public class ScriptManager {
 
@@ -145,6 +151,15 @@ public class ScriptManager {
 		lblcaption.setBounds(-1, 0, 360, 43);
 		frmcrawler.getContentPane().add(lblcaption);
 		
+		KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
+	    Action escapeAction = new AbstractAction() {
+	      public void actionPerformed(ActionEvent e) {
+	    	  frmcrawler.dispose();
+	      }
+	    };
+	    frmcrawler.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+	        escapeKeyStroke, "ESCAPE");
+	    frmcrawler.getRootPane().getActionMap().put("ESCAPE", escapeAction);
 	}
 	
 	public void ScriptAdd()
