@@ -600,7 +600,7 @@ public class FormulaAmazeF5 {
 				{
 					sectype="CM";
 				}
-				String expdate = pl.getExpdd()+"-"+com.cashbot.prestolib.Date.getmonthvalue(pl.getExpmonthyear().substring(0, 3))+"-"+pl.getExpmonthyear().substring(3, 5);
+				String expdate = new SimpleDateFormat("dd-MM-yy").format(new Date());
 				clientid = CommonObjects.objpresto.userPlaceOrderNSE("omnesys", sectype, pl.getheadsymbol(), pl.getheadsecid(), expdate, "FA9749", String.valueOf(quant), "0.0", "0.0", pl.getOpttype(), pl.getStrike(),
 						"MARKET", "Presto_Mathsartz_Strategy", "Testing Order", "DAY", orderside);
 			}

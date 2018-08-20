@@ -530,12 +530,13 @@ public class BeastView implements KeyListener{
 		totaltable.setFont(new Font("Ebrima", Font.PLAIN, 11));
 		totaltable.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		totaltable.setTableHeader(null);
-		totaltable.setRowSelectionAllowed(false);
+		totaltable.setRowSelectionAllowed(true);
 		totaltable.setRowHeight(34);
 		totaltable.setPreferredSize(new Dimension((int)width -25, 35));
 		totaltable.setBackground(Color.BLACK);
 		totaltable.setShowGrid(true);
 		totaltable.setShowVerticalLines(true);
+		totaltable.setSelectionBackground(new Color(0,70,140));
 
 		
 		pnlmiddle.add(totaltable);
