@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.cashbot.commons.CommonObjects;
 import com.cashbot.collection.Amazevalues;
+import com.cashbot.collection.AmazevaluesZ;
 import com.cashbot.collection.BeastViewList;
 import com.cashbot.collection.FormulaData;
 import com.cashbot.collection.SquadScripts;
@@ -18,14 +19,14 @@ public class FormulaAmazeF6 {
 	double ltp, points,low,high,nextline,baseline,tpl;
 	Date ltt;
 	//Amaze formula inputs data
-	double x,y;
+	double x,y,z;
 	Date st,mt,et;
 	int lcount, round, qty;
 	Boolean tradeswitch, isend;
 	public static SimpleDateFormat datefmt=new SimpleDateFormat("yyyyMMdd HH:mm:ss");
 	getListcommon listcom = new getListcommon();
 	Boolean Isboxed =false;
-	Amazevalues fvalue= null;
+	AmazevaluesZ fvalue= null;
 	FormulaData finput =null;
 	BeastViewList bv = null;
 	String fname = "F6";
@@ -67,7 +68,7 @@ public class FormulaAmazeF6 {
 	{
 		try
 		{
-			fvalue.SetAmazevalues(c, lc, r, points, low, high, nextline, baseline, way,tpl);
+			fvalue.SetAmazevalues(c, lc, r, points, low, high, nextline, baseline, way,tpl,z);
 			finput.setIsend(isend);
 			bv = listcom.getBeastViewListByID(identity,CommonObjects.GlobalBeastViewList);
 			bv.setF6Point(points);
@@ -88,7 +89,7 @@ public class FormulaAmazeF6 {
 		try
 		{
 			
-			fvalue = listcom.getAmazeValuesByID(identity, CommonObjects.GlobalAmazeValuesF6);
+			fvalue = listcom.getAmazeValuesZByID(identity, CommonObjects.GlobalAmazeValuesF6);
 			c = fvalue.getc();
 			lc = fvalue.getlc();
 			r = fvalue.getr();
@@ -100,6 +101,7 @@ public class FormulaAmazeF6 {
 			nextline = fvalue.getnextline();
 			baseline = fvalue.getbaseline();
 			tpl = fvalue.gettpl();
+			z = fvalue.getz();
 			
 			x =finput.getX();
 			y = finput.getY();
@@ -219,6 +221,7 @@ public class FormulaAmazeF6 {
 						way = "L1";
 						nextline = low + (low*(x/100));
 						baseline = low;
+						z= x + 0.2;
 						tpl = ((ltp * qty) * -1);
 					}
 					Isboxed = true;
@@ -324,9 +327,9 @@ public class FormulaAmazeF6 {
 		{
 			if (Isboxed == false)
 			{
-				if (ltp >= (nextline + (nextline*(y/100))))
+				if (ltp >= (nextline + (nextline*(z/100))))
 				{
-					baseline = nextline;
+					z=y;
 					nextline = (nextline + (nextline*(y/100)));
 					points=points+1;
 					c=c+1;
@@ -373,6 +376,7 @@ public class FormulaAmazeF6 {
 						CommonObjects.GlobalTradeInfo.add(ti);
 						way="L5";
 						nextline = (baseline + (baseline*(x/100)));
+						z = x + 0.2;
 						tpl = (tpl + ((ltp*qty) * -1));
 					}
 					Isboxed = true;
@@ -417,6 +421,7 @@ public class FormulaAmazeF6 {
 						way = "R1";
 						nextline = high - (high*(x/100));
 						baseline = high;
+						z = x + 0.2;
 						tpl = (ltp * qty);
 					}
 					Isboxed = true;
@@ -521,9 +526,9 @@ public class FormulaAmazeF6 {
 		{
 			if (Isboxed == false)
 			{
-				if (ltp <= (nextline - (nextline*(y/100))))
+				if (ltp <= (nextline - (nextline*(z/100))))
 				{
-					baseline =nextline;
+					z = y;
 					nextline = (nextline - (nextline*(y/100)));
 					points =points +1;
 					c=c+1;
@@ -566,6 +571,7 @@ public class FormulaAmazeF6 {
 						CommonObjects.GlobalTradeInfo.add(ti);
 						way = "R5";
 						nextline = (baseline - (baseline*(x/100)));
+						z = x + 0.2;
 						tpl = tpl + (ltp * qty);
 					}
 					Isboxed = true;

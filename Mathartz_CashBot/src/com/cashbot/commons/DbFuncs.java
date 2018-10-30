@@ -24,6 +24,7 @@ import org.pmw.tinylog.writers.FileWriter;
 
 import com.cashbot.collection.AmazeCentervalues;
 import com.cashbot.collection.Amazevalues;
+import com.cashbot.collection.AmazevaluesZ;
 import com.cashbot.collection.BeastViewList;
 import com.cashbot.collection.FormulaData;
 import com.cashbot.collection.Scriptsdetail;
@@ -447,6 +448,42 @@ public class DbFuncs {
 	         while (rs.next()) {
 	        	 Amazevalues record = new Amazevalues(rs.getInt("ID"),rs.getString("HEADID"),
 	        			 0,0,0,0.0,0.0,0.0,0.0,0.0,"FT",0.0);
+	        	 avs.add(record);
+	         }
+	         
+	         if (rs != null) {
+	                rs.close();
+	            }
+	        
+		}
+		catch(Exception ex){
+			System.out.println(ex.getMessage());
+			Logger.error(ex);
+		}
+		finally {
+			try {
+	            
+	            if (stmt != null) {
+	                stmt.close();
+	            }
+	        } catch (SQLException e) {
+	            Logger.error("Ignored", e);
+	        }	
+		}
+		return avs;
+	}
+	
+	public List<AmazevaluesZ> getInitialAmazevaluesZ(Connection con)
+	{
+		List<AmazevaluesZ> avs=new ArrayList<AmazevaluesZ>();
+		try {
+			 conn = CheckandConnectDB(conn);
+	         stmt = conn.createStatement();
+	         stmt.execute("SELECT * FROM TBL_TRADE_LINE;");
+	         ResultSet rs =stmt.getResultSet(); 
+	         while (rs.next()) {
+	        	 AmazevaluesZ record = new AmazevaluesZ(rs.getInt("ID"),rs.getString("HEADID"),
+	        			 0,0,0,0.0,0.0,0.0,0.0,0.0,"FT",0.0,0.0);
 	        	 avs.add(record);
 	         }
 	         

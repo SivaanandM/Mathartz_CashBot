@@ -275,7 +275,7 @@ public class BeastView implements KeyListener{
 				CommonObjects.GlobalAmazeValuesF3 = dbobj.getInitialAmazevalues(h2con);
 				CommonObjects.GlobalAmazeValuesF4 = dbobj.getInitialAmazevalues(h2con);
 				CommonObjects.GlobalAmazeValuesF5 = dbobj.getInitialAmazevalues(h2con);
-				CommonObjects.GlobalAmazeValuesF6 = dbobj.getInitialAmazevalues(h2con);
+				CommonObjects.GlobalAmazeValuesF6 = dbobj.getInitialAmazevaluesZ(h2con);
 				
 				CommonObjects.GlobalTradeInfo = new ArrayList<Tradeinfo>();
 				FeedAPITesterWithQueue objfeeder =new FeedAPITesterWithQueue();

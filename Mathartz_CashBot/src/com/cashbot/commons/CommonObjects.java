@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cashbot.collection.AmazeCentervalues;
 import com.cashbot.collection.Amazevalues;
+import com.cashbot.collection.AmazevaluesZ;
 import com.cashbot.collection.BeastViewList;
 import com.cashbot.collection.FormulaData;
 import com.cashbot.collection.SquadScripts;
@@ -29,7 +30,7 @@ public class CommonObjects
 	public static List<Amazevalues> GlobalAmazeValuesF3;
 	public static List<Amazevalues> GlobalAmazeValuesF4;
 	public static List<Amazevalues> GlobalAmazeValuesF5;
-	public static List<Amazevalues> GlobalAmazeValuesF6;
+	public static List<AmazevaluesZ> GlobalAmazeValuesF6;
 	public static List<Tradeinfo> GlobalTradeInfo;
 	public static String[][] Globaluniqueheadid;
 	public static String[][] Globaltradlinemap;
